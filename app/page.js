@@ -64,7 +64,7 @@ export default function Pagina() {
         onAperto={setTaskAperto}
       />
       <Review attiva={schermata === "review"} />
-      <Config attiva={schermata === "config"} />
+      <Config attiva={schermata === "config"} dati={dati} ricarica={ricarica} />
       <BarraCattura onCatturato={ricarica} />
     </>
   );

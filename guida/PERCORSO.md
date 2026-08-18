@@ -189,6 +189,9 @@ Da qui in poi lavori direttamente col tuo Claude, senza percorso:
   spiegato nella descrizione del campo), il peso obiettivo se ne hai uno.
 - Gli **obiettivi**: si scrivono direttamente in dashboard, colonna per
   colonna.
+- La pagina **Config** (dal menu in alto a sinistra): il tema chiaro o
+  scuro, nome e cognome, e la password nuova al posto di quella di
+  partenza.
 - Un **programma di allenamento**: chiedi al tuo Claude di prepararne uno
   nel formato di `/api/allenamento/importa` (il formato è documentato nel
   file di quella rotta) e di caricartelo.

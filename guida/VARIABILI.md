@@ -69,8 +69,9 @@ TELEGRAM_USER_ID=
 # --- Sicurezza ---------------------------------------------------------------
 # openssl rand -hex 32. Firma i cookie di sessione. Incollalo senza guardarlo.
 AUTH_SECRET=
-# La password che digiti tu per entrare. UNA FRASE LUNGA, non otto caratteri:
-# niente impedisce a qualcuno di provarne diecimila.
+# La password di partenza per entrare. UNA FRASE LUNGA, non otto caratteri:
+# niente impedisce a qualcuno di provarne diecimila. Poi si cambia dalla
+# pagina Config, e questa resta la via di recupero se la dimentichi.
 DASHBOARD_PASSWORD=
 # openssl rand -hex 32. Accesso da script e scorciatoie del telefono.
 API_SECRET=

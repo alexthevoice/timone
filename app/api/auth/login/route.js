@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { OPZIONI_COOKIE, confrontoATempoCostante, coniaSessione } from "@/lib/auth";
+import { OPZIONI_COOKIE, confrontoATempoCostante, coniaSessione, passwordCombacia } from "@/lib/auth";
+import { leggiPasswordHash } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -36,8 +37,12 @@ export async function POST(richiesta) {
       ? NextResponse.redirect(new URL(percorso, richiesta.url), 303)
       : NextResponse.json({ errore }, { status: stato });
 
+  // La password scelta da Config (hash su Airtable) vince su quella di
+  // partenza nelle variabili d'ambiente. Se Airtable non risponde si ripiega
+  // sulla variabile: chiudersi fuori di casa perché il database dorme no.
+  const salvata = await leggiPasswordHash().catch(() => null);
   const attesa = process.env.DASHBOARD_PASSWORD;
-  if (!attesa) {
+  if (!salvata && !attesa) {
     return indietro(
       "/login?errore=configurazione",
       "DASHBOARD_PASSWORD non è impostata: il cancello non può funzionare.",
@@ -45,9 +50,10 @@ export async function POST(richiesta) {
     );
   }
 
-  // Confronto a tempo costante: un confronto normale esce al primo carattere
-  // diverso, e quel tempo in più racconta quanti caratteri erano giusti.
-  if (!confrontoATempoCostante(password, attesa)) {
+  const buona = salvata
+    ? await passwordCombacia(password, salvata)
+    : confrontoATempoCostante(password, attesa);
+  if (!buona) {
     await new Promise((r) => setTimeout(r, 400));
     return indietro("/login?errore=1", "Password sbagliata", 401);
   }

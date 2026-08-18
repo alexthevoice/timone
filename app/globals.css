@@ -6,29 +6,37 @@
    significa toccare una riga sola.
    ============================================================ */
 :root{
-  --bg:            #f6f6f7;
+  /* Navy e ambra su fondo chiaro, carte bianche: la veste della casa.
+     Per cambiare i colori si toccano queste righe e nient'altro. */
+  --navy:          #133256;
+  --navy-scuro:    #0D2240;
+  --ambra:         #E8A838;
+
+  --bg:            #F0F4F8;
   --surface:       #ffffff;
-  --surface-2:     #fafafa;
-  --surface-3:     #f1f1f3;
-  --border:        #e4e4e7;
-  --border-strong: #d4d4d8;
+  --surface-2:     #F8FAFC;
+  --surface-3:     #F1F5F9;
+  --border:        #D9E0EA;
+  --border-strong: #CBD5E1;
 
-  --text:          #18181b;
-  --text-dim:      #6b6b73;
-  --text-faint:    #a1a1aa;
+  --text:          #0F172A;
+  --text-dim:      #475569;
+  --text-faint:    #94A3B8;
 
-  --accent:        #2f6fed;
-  --accent-soft:   #e8f0fe;
-  --ok:            #16a34a;
-  --ok-soft:       #e7f6ec;
-  --warn:          #d97706;
-  --warn-soft:     #fdf1e0;
-  --bad:           #dc2626;
-  --bad-soft:      #fdeaea;
+  /* L'ambra piena su bianco non regge il testo piccolo: l'accento è la sua
+     versione più scura. Nel tema scuro torna piena. */
+  --accent:        #D69826;
+  --accent-soft:   #FFF8E1;
+  --ok:            #2D8A4E;
+  --ok-soft:       #E5F3EA;
+  --warn:          #D69826;
+  --warn-soft:     #FFF8E1;
+  --bad:           #DC3545;
+  --bad-soft:      #FDEBEC;
 
-  --hot:           #dc2626;
-  --warm:          #d97706;
-  --cold:          #71717a;
+  --hot:           #DC3545;
+  --warm:          #D69826;
+  --cold:          #64748B;
 
   --radius:        14px;
   --radius-sm:     9px;
@@ -40,21 +48,23 @@
   --bar-h:         64px;
 }
 
+/* Il tema si sceglie da Config (data-tema su <html>): senza scelta vale il
+   sistema. I token scuri sono scritti due volte apposta, una per strada. */
 @media (prefers-color-scheme: dark){
-  :root{
-    --bg:            #0c0c0e;
-    --surface:       #141417;
-    --surface-2:     #1a1a1e;
-    --surface-3:     #232328;
-    --border:        #26262b;
-    --border-strong: #33333a;
+  :root:not([data-tema="chiaro"]){
+    --bg:            #0A1B33;
+    --surface:       #133256;
+    --surface-2:     #1B3B63;
+    --surface-3:     #24466F;
+    --border:        #29486E;
+    --border-strong: #3A5A82;
 
-    --text:          #f4f4f5;
-    --text-dim:      #a1a1aa;
-    --text-faint:    #71717a;
+    --text:          #F1F5F9;
+    --text-dim:      #B6C4D6;
+    --text-faint:    #7E93AC;
 
-    --accent:        #5b8dff;
-    --accent-soft:   #17224a;
+    --accent:        #E8A838;
+    --accent-soft:   #3A2F14;
     --ok:            #4ade80;
     --ok-soft:       #14301f;
     --warn:          #fbbf24;
@@ -68,6 +78,33 @@
 
     --shadow:        0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.25);
   }
+}
+:root[data-tema="scuro"]{
+    --bg:            #0A1B33;
+    --surface:       #133256;
+    --surface-2:     #1B3B63;
+    --surface-3:     #24466F;
+    --border:        #29486E;
+    --border-strong: #3A5A82;
+
+    --text:          #F1F5F9;
+    --text-dim:      #B6C4D6;
+    --text-faint:    #7E93AC;
+
+    --accent:        #E8A838;
+    --accent-soft:   #3A2F14;
+    --ok:            #4ade80;
+    --ok-soft:       #14301f;
+    --warn:          #fbbf24;
+    --warn-soft:     #33260c;
+    --bad:           #f87171;
+    --bad-soft:      #3a1a1a;
+
+    --hot:           #f87171;
+    --warm:          #fbbf24;
+    --cold:          #8a8a93;
+
+    --shadow:        0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.25);
 }
 
 /* ============================================================
@@ -1470,25 +1507,43 @@ body:has(.gate){padding-bottom:0}
 #card-vendite .dsotto.neg{color:var(--bad)}
 
 /* ============================================================
-   IL PANINO E IL CASSETTO — le schermate si aprono da sinistra
+   IL PANINO E IL CASSETTO — la barra veste navy
    ============================================================ */
-.panino{display:flex;flex-direction:column;justify-content:center;gap:4px;width:34px;height:34px;padding:8px;border-radius:8px;flex:0 0 auto}
-.panino:hover{background:var(--surface-3)}
-.panino span{display:block;height:2px;border-radius:2px;background:var(--text);transition:background .12s}
-.panino[aria-expanded="true"] span{background:var(--accent)}
-.topbar .dove{color:var(--text-faint);font-weight:400}
+.topbar{background:var(--navy);border-bottom:1px solid var(--navy-scuro)}
+.topbar .brand{color:#F1F5F9}
+.topbar .brand .dot{background:var(--ambra)}
+.topbar .dove{color:#B6C4D6;font-weight:400}
+.topbar .meta{color:#DCE6F2}
+.topbar .meta .num{color:#DCE6F2}
+.topbar .pill{background:rgba(255,255,255,.10);color:#DCE6F2}
+.topbar .pill.live{background:rgba(45,138,78,.30);color:#8FE0AE}
+.topbar .versione{color:var(--ambra)}
 
-.drawer-sfondo{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.35)}
+.panino{display:flex;flex-direction:column;justify-content:center;gap:4px;width:34px;height:34px;padding:8px;border-radius:8px;flex:0 0 auto}
+.panino:hover{background:rgba(255,255,255,.10)}
+.panino span{display:block;height:2px;border-radius:2px;background:#F1F5F9;transition:background .12s}
+.panino[aria-expanded="true"] span{background:var(--ambra)}
+
+.drawer-sfondo{
+  position:fixed;inset:0;z-index:70;background:rgba(13,34,64,.45);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.drawer-sfondo[data-aperto="true"]{opacity:1;pointer-events:auto}
 .drawer{
   position:fixed;top:0;left:0;bottom:0;z-index:71;width:250px;
-  background:var(--surface);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;gap:2px;
-  padding:72px 12px 16px;box-shadow:12px 0 40px rgba(0,0,0,.18);
+  background:var(--navy);display:flex;flex-direction:column;gap:2px;
+  padding:72px 12px 16px;box-shadow:12px 0 40px rgba(0,0,0,.25);
+  transform:translateX(-102%);visibility:hidden;
+  transition:transform .25s cubic-bezier(.2,.7,.3,1), visibility 0s linear .25s;
 }
-.drawer button{text-align:left;padding:10px 12px;border-radius:8px;font-size:14px;color:var(--text-dim)}
-.drawer button:hover{background:var(--surface-3)}
-.drawer button[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
-.riga-divisoria{height:1px;background:var(--border);margin:10px 4px}
+.drawer[data-aperto="true"]{
+  transform:translateX(0);visibility:visible;
+  transition:transform .25s cubic-bezier(.2,.7,.3,1);
+}
+.drawer button{text-align:left;padding:10px 12px;border-radius:8px;font-size:14px;color:#DCE6F2}
+.drawer button:hover{background:rgba(255,255,255,.08)}
+.drawer button[aria-current="true"]{background:rgba(232,168,56,.16);color:var(--ambra);font-weight:600}
+.riga-divisoria{height:1px;background:rgba(255,255,255,.14);margin:10px 4px}
 
 /* le azioni sulle colonne dei cicli: compaiono passandoci sopra */
 .col > h3 .azioni-colonna{display:none;margin-left:6px;gap:2px}
@@ -1500,3 +1555,25 @@ body:has(.gate){padding-bottom:0}
   background:var(--surface);border:1px solid var(--accent);border-radius:6px;
   padding:3px 7px;outline:none;text-transform:none;letter-spacing:0;
 }
+
+/* ---- Config: la scelta del tema e i moduli utente ---- */
+.scelte-tema{display:flex;gap:8px;flex-wrap:wrap}
+.scelte-tema button{
+  padding:8px 14px;border-radius:9px;font-size:13px;
+  background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);
+}
+.scelte-tema button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.modulo-config{display:flex;flex-direction:column;gap:10px;max-width:340px}
+.modulo-config label{font-size:12px;color:var(--text-dim)}
+.modulo-config input{
+  width:100%;padding:9px 12px;border-radius:8px;font-size:13.5px;
+  background:var(--surface-2);border:1px solid var(--border);outline:none;color:var(--text);
+}
+.modulo-config input:focus{border-color:var(--accent)}
+.modulo-config .btn-salva{
+  align-self:flex-start;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:600;
+  background:var(--ambra);color:var(--navy);
+}
+.modulo-config .esito{font-size:12.5px}
+.modulo-config .esito.ok{color:var(--ok)}
+.modulo-config .esito.male{color:var(--bad)}

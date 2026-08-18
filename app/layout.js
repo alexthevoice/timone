@@ -1,8 +1,8 @@
 import { NOME } from "@/lib/app";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
+const geistSans = DM_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -20,7 +20,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="it" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* La scelta del tema va applicata prima che si veda qualsiasi cosa:
+            questo script gira per primo e mette data-tema su <html>. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{var t=localStorage.getItem("tema");if(t==="chiaro"||t==="scuro"){document.documentElement.dataset.tema=t}}catch(e){}',
+          }}
+        />{children}</body>
     </html>
   );
 }

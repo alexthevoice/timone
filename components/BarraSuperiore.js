@@ -96,22 +96,21 @@ export default function BarraSuperiore({ schermata, onSchermata, errore }) {
         </div>
       </header>
 
-      {aperto && (
-        <>
-          <div className="drawer-sfondo" onClick={() => setAperto(false)} />
-          <nav className="drawer">
-            {SCHERMATE.map((s) => (
-              <button key={s.id} aria-current={schermata === s.id} onClick={() => vai(s.id)}>
-                {s.nome}
-              </button>
-            ))}
-            <div className="riga-divisoria" />
-            <button aria-current={schermata === "config"} onClick={() => vai("config")}>
-              Config
-            </button>
-          </nav>
-        </>
-      )}
+      {/* Il cassetto resta montato anche da chiuso: è quello che permette
+          l'animazione di uscita, un elemento smontato non scivola da nessuna
+          parte. Chiuso non si clicca (pointer-events) e non si vede. */}
+      <div className="drawer-sfondo" data-aperto={aperto} onClick={() => setAperto(false)} />
+      <nav className="drawer" data-aperto={aperto} aria-hidden={!aperto}>
+        {SCHERMATE.map((s) => (
+          <button key={s.id} tabIndex={aperto ? 0 : -1} aria-current={schermata === s.id} onClick={() => vai(s.id)}>
+            {s.nome}
+          </button>
+        ))}
+        <div className="riga-divisoria" />
+        <button tabIndex={aperto ? 0 : -1} aria-current={schermata === "config"} onClick={() => vai("config")}>
+          Config
+        </button>
+      </nav>
     </>
   );
 }
