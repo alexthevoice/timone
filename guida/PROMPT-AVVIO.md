@@ -1,7 +1,8 @@
 # Il prompt di avvio
 
-Copia tutto quello che sta nel riquadro e incollalo a Claude, nel progetto
-dove hai caricato questa cartella. Poi segui la conversazione.
+Copia tutto quello che sta nel riquadro e incollalo alla tua AI (Claude,
+ChatGPT, Gemini, quella che usi), nella chat o nel progetto dove hai
+caricato i file di questa cartella. Poi segui la conversazione.
 
 ```
 Voglio costruire la mia dashboard personale con il kit Timone. In questo
@@ -32,6 +33,6 @@ Regole per te:
 Cominciamo dalla tappa 0.
 ```
 
-Una nota: se usi Claude Code sul computer invece di claude.ai, il percorso è
-lo stesso, ma Claude potrà anche eseguire i comandi al posto tuo. Diglielo e
-lascialo fare, con le stesse regole.
+Una nota: se la tua AI può usare il computer al posto tuo (per esempio
+Claude Code o strumenti simili), il percorso è lo stesso: diglielo e
+lasciala fare, con le stesse regole.

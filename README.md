@@ -25,10 +25,17 @@ finestra.
 
 ## Se parti da zero
 
-Nella cartella [guida/](./guida) c'è il percorso completo per chi non ha mai
-messo online niente: si carica in un progetto Claude e da lì si viene guidati
-tappa per tappa, dalla base vuota alla dashboard sul proprio indirizzo.
-Comincia da [guida/ISTRUZIONI.md](./guida/ISTRUZIONI.md).
+Scarica la guida:
+[**timone-guida.zip**](https://github.com/alexthevoice/timone/releases/latest/download/timone-guida.zip),
+aprila, e comincia da ISTRUZIONI (una pagina). Da lì la tua AI (Claude,
+ChatGPT, Gemini, quella che usi) ti porta tappa per tappa dalla base vuota
+alla dashboard sul tuo indirizzo; oppure segui PERCORSO.md da solo, è
+scritto per persone. La stessa cartella vive anche qui nel repo:
+[guida/](./guida).
+
+Per copiare il codice: **Use this template** qui sopra, oppure
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falexthevoice%2Ftimone)
 
 ## Per farla partire
 

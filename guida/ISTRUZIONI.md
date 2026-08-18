@@ -13,11 +13,14 @@ scaricarli tutti con un pulsante.
 
 ## Come funziona questa guida
 
-Non la segui da solo: la segui con Claude. Crea un progetto su claude.ai (o
-apri Claude Code), carica dentro i file di questa cartella, poi apri il file
-`PROMPT-AVVIO.md`, copia il testo che contiene e incollalo a Claude. Da lì in
-poi ti guida lui, un passo alla volta, e a ogni passo controlla insieme a te
-che tutto abbia funzionato prima di andare avanti.
+Non la segui da solo: la segui con la tua intelligenza artificiale, quella
+che usi già (Claude, ChatGPT, Gemini o un'altra). Apri una nuova chat o un
+progetto, carica dentro i file di questa cartella, poi apri il file
+`PROMPT-AVVIO.md`, copia il testo che contiene e incollaglielo. Da lì in poi
+ti guida lei, un passo alla volta, e a ogni passo controlla insieme a te che
+tutto abbia funzionato prima di andare avanti. Preferisci fare da solo? La
+guida vera è `PERCORSO.md`: tappe scritte per persone, si segue anche senza
+nessuna AI.
 
 In PROMPT-PRONTI.md trovi anche i prompt per farti scrivere dalla tua AI
 i contenuti su misura: il programma di allenamento, le abitudini, gli
