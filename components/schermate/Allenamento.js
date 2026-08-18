@@ -177,7 +177,7 @@ export default function Allenamento({ attiva, dati, modifica, ricarica }) {
         {/* Le settimane */}
         <section className="card col-12" id="card-84">
           <header>
-            <h2>84 giorni</h2>
+            <h2>{settimane.reduce((n, s) => n + s.giorni.length, 0)} giorni</h2>
             <div className="spacer" />
             <span className="hint">
               clicca un giorno per le tre versioni · S, C, E per spuntarlo
