@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Griglia from "@/components/Griglia";
+import { SETTORI_PREDEFINITI } from "@/lib/settori";
 import { postJson } from "@/lib/useDati";
 
 /**
- * I cicli aperti, in Kanban per settore.
+ * I Cicli Aperti, in Kanban per settore.
  *
  * Il posto dove un pensiero si scarica a terra nel momento in cui arriva:
  * niente date, niente urgenze, solo la colonna del reparto a cui appartiene.
@@ -13,20 +14,21 @@ import { postJson } from "@/lib/useDati";
  * si promuove: diventa un task vero, con fascia e scadenza, e sparisce da
  * qui lasciando la traccia (PromossoIl e l'id del task, sulla riga).
  *
- * Le colonne sono le scelte del campo Settore su Airtable: scriverne uno
- * nuovo nella casella in fondo crea la colonna (typecast fa il resto). Le
- * quattro predefinite si vedono anche da vuote, così la parete ha una forma
- * dal primo giorno; una colonna nuova vive finché ha almeno un ciclo dentro.
+ * Le colonne sono un dato, non una costante: l'elenco ordinato vive nel
+ * Profilo e si governa da qui — si creano, si rinominano (rinominando anche
+ * i cicli che ci stanno dentro) e si eliminano (i pensieri aperti scivolano
+ * in "Da smistare", che è il contrario di perderli). Finché non decidi i
+ * tuoi reparti valgono i quattro predefiniti.
  */
 
-const SETTORI_PREDEFINITI = ["Amministrazione", "Personale", "IT", "Vendite"];
 const SENZA = "__senza__";
 
 export default function Cicli({ attiva, dati, modifica, ricarica }) {
   const [inVolo, setInVolo] = useState(null);
   const [bozze, setBozze] = useState({});
   const [inPromozione, setInPromozione] = useState(null);
-  const [colonneNuove, setColonneNuove] = useState([]);
+  const [inRinomina, setInRinomina] = useState(null);
+  const [nuovoNome, setNuovoNome] = useState("");
   const [nomeNuova, setNomeNuova] = useState("");
 
   if (!dati) {
@@ -42,16 +44,12 @@ export default function Cicli({ attiva, dati, modifica, ricarica }) {
   }
 
   const cicli = dati.cicli ?? [];
+  const decisi = dati.profilo?.settori?.length ? dati.profilo.settori : SETTORI_PREDEFINITI;
 
-  // Le colonne: le predefinite sempre, poi quelle che esistono nei dati,
-  // poi quelle appena aggiunte a mano. "Senza settore" compare solo se
-  // qualcosa ci è finito dentro (una cattura al volo da Telegram).
+  // Le colonne decise, più quelle che esistono nei dati e non sono in elenco
+  // (un settore scritto al volo da Telegram): niente di ciò che c'è sparisce.
   const daiDati = [...new Set(cicli.map((c) => c.settore).filter(Boolean))];
-  const colonne = [
-    ...SETTORI_PREDEFINITI,
-    ...daiDati.filter((s) => !SETTORI_PREDEFINITI.includes(s)).sort((a, b) => a.localeCompare(b, "it")),
-    ...colonneNuove.filter((s) => !daiDati.includes(s) && !SETTORI_PREDEFINITI.includes(s)),
-  ];
+  const colonne = [...decisi, ...daiDati.filter((s) => !decisi.includes(s)).sort((a, b) => a.localeCompare(b, "it"))];
   const senzaSettore = cicli.filter((c) => !c.settore);
 
   const aggiungi = async (settore) => {
@@ -101,6 +99,32 @@ export default function Cicli({ attiva, dati, modifica, ricarica }) {
     await ricarica();
   };
 
+  const creaColonna = async () => {
+    const nome = nomeNuova.trim();
+    if (!nome) return;
+    setNomeNuova("");
+    await postJson("/api/cicli/settori", { nome });
+    await ricarica();
+  };
+
+  const rinomina = async (vecchio) => {
+    const nuovo = nuovoNome.trim();
+    setInRinomina(null);
+    setNuovoNome("");
+    if (!nuovo || nuovo === vecchio) return;
+    await postJson("/api/cicli/settori", { vecchio, nuovo }, "PATCH");
+    await ricarica();
+  };
+
+  const eliminaColonna = async (nome, quanti) => {
+    const ok =
+      quanti === 0 ||
+      window.confirm(`La colonna «${nome}» ha ${quanti} cicli aperti: finiscono in "Da smistare". Procedo?`);
+    if (!ok) return;
+    await postJson("/api/cicli/settori", { nome }, "DELETE");
+    await ricarica();
+  };
+
   const colonna = (settore, righe) => (
     <div
       className="col"
@@ -114,8 +138,45 @@ export default function Cicli({ attiva, dati, modifica, ricarica }) {
       }}
     >
       <h3>
-        {settore === SENZA ? "Da smistare" : settore}
-        <span className="n">{righe.length}</span>
+        {inRinomina === settore ? (
+          <input
+            autoFocus
+            className="rinomina"
+            value={nuovoNome}
+            onChange={(e) => setNuovoNome(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") rinomina(settore);
+              if (e.key === "Escape") setInRinomina(null);
+            }}
+            onBlur={() => rinomina(settore)}
+          />
+        ) : (
+          <>
+            {settore === SENZA ? "Da smistare" : settore}
+            <span className="n">{righe.length}</span>
+            {settore !== SENZA && (
+              <span className="azioni-colonna">
+                <button
+                  className="mini"
+                  title="Rinomina la colonna (rinomina anche i suoi cicli)"
+                  onClick={() => {
+                    setInRinomina(settore);
+                    setNuovoNome(settore);
+                  }}
+                >
+                  ✎
+                </button>
+                <button
+                  className="mini"
+                  title="Elimina la colonna: i cicli aperti finiscono in Da smistare"
+                  onClick={() => eliminaColonna(settore, righe.length)}
+                >
+                  ×
+                </button>
+              </span>
+            )}
+          </>
+        )}
       </h3>
       <div className="cards">
         {righe.map((c) => (
@@ -167,7 +228,7 @@ export default function Cicli({ attiva, dati, modifica, ricarica }) {
     <Griglia id="cicli" attiva={attiva}>
       <section className="card col-12" id="card-cicli">
         <header>
-          <h2>Cicli aperti</h2>
+          <h2>Cicli Aperti</h2>
           <div className="spacer" />
           <span className="hint">
             quello che ti gira in testa, parcheggiato per settore: si promuove a task quando è il momento
@@ -182,17 +243,11 @@ export default function Cicli({ attiva, dati, modifica, ricarica }) {
             <input
               value={nomeNuova}
               onChange={(e) => setNomeNuova(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key !== "Enter") return;
-                const nome = nomeNuova.trim();
-                if (!nome) return;
-                setColonneNuove((c) => [...c, nome]);
-                setNomeNuova("");
-              }}
+              onKeyDown={(e) => e.key === "Enter" && creaColonna()}
               placeholder="+ nuovo settore, poi Invio"
             />
             <span className="hint">
-              la colonna resta finché ha almeno un ciclo dentro; da Telegram: «ciclo IT: ordinare il toner»
+              le colonne si rinominano e si eliminano dal loro titolo; da Telegram: «ciclo IT: ordinare il toner»
             </span>
           </div>
         </div>

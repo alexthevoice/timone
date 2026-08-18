@@ -4,6 +4,7 @@ import { useState } from "react";
 import BarraSuperiore from "@/components/BarraSuperiore";
 import BarraCattura from "@/components/BarraCattura";
 import Cicli from "@/components/schermate/Cicli";
+import Config from "@/components/schermate/Config";
 import Home from "@/components/schermate/Home";
 import Quadranti from "@/components/schermate/Quadranti";
 import SchermataAllenamento from "@/components/schermate/Allenamento";
@@ -63,6 +64,7 @@ export default function Pagina() {
         onAperto={setTaskAperto}
       />
       <Review attiva={schermata === "review"} />
+      <Config attiva={schermata === "config"} />
       <BarraCattura onCatturato={ricarica} />
     </>
   );

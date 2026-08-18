@@ -23,6 +23,7 @@ Una riga sola: chi sei e le tue preferenze.
 | ObiettivoCalorico | numero intero | |
 | MinutiFormazione | numero intero | vuoto vale 150 |
 | PesoObiettivo | numero, 1 decimale | vuoto = nessun traguardo sulla curva |
+| Settori | testo lungo | JSON: le colonne dei Cicli Aperti, in ordine; vuoto = le quattro predefinite |
 
 ## Persone
 
