@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { NOME } from "@/lib/app";
+import { MODULI } from "@/lib/moduli";
 import { useOrologio } from "@/lib/useOrologio";
 import { ULTIMA_MODIFICA, VERSIONE } from "@/lib/versione";
 
@@ -13,17 +14,18 @@ import { ULTIMA_MODIFICA, VERSIONE } from "@/lib/versione";
  * tiene solo quello che serve a colpo d'occhio: dove sei, se i dati
  * arrivano, la versione e l'ora.
  */
-const SCHERMATE = [
-  { id: "home", nome: "Home" },
-  { id: "cicli", nome: "Cicli Aperti" },
-  { id: "quadranti", nome: "Quadranti" },
-  { id: "allenamento", nome: "Allenamento" },
-  { id: "crm", nome: "CRM" },
-  { id: "finanze", nome: "Finanze" },
-  { id: "review", nome: "Review" },
-];
+/** Il menu si costruisce dai moduli accesi, nell'ordine scelto dall'utente. */
+function vociMenu(interfaccia) {
+  const voci = [{ id: "home", nome: "Home" }];
+  for (const id of interfaccia?.menu ?? []) {
+    const m = MODULI.find((x) => x.id === id);
+    if (m?.schermata && interfaccia.moduli[m.id] !== false) voci.push({ id: m.id, nome: m.nome });
+  }
+  return voci;
+}
 
-export default function BarraSuperiore({ schermata, onSchermata, errore, nome = NOME }) {
+export default function BarraSuperiore({ schermata, onSchermata, errore, interfaccia, nome = NOME }) {
+  const SCHERMATE = vociMenu(interfaccia);
   // L'orologio parte solo sul browser: se lo disegnasse anche il server,
   // i due orari non coinciderebbero e React protesterebbe.
   const { ora } = useOrologio();

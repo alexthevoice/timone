@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              'try{var t=localStorage.getItem("tema");if(t==="chiaro"||t==="scuro"){document.documentElement.dataset.tema=t}}catch(e){}',
+              'try{var t=localStorage.getItem("tema");if(t==="chiaro"||t==="scuro"){document.documentElement.dataset.tema=t}var s=localStorage.getItem("schema");if(s&&s!=="navy"){document.documentElement.dataset.schema=s}}catch(e){}',
           }}
         />{children}</body>
     </html>

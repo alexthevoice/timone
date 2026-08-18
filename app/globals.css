@@ -1614,3 +1614,175 @@ body:has(.gate){padding-bottom:0}
   padding:4px 12px 10px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:#F1F5F9;
 }
 .drawer-brand .dot{width:9px;height:9px;border-radius:99px;background:var(--ambra);display:inline-block}
+
+/* ============================================================
+   GLI SCHEMI COLORE — navy è la base; gli altri ridefiniscono
+   i token. Ogni schema ha il suo scuro scritto due volte, una
+   per strada (sistema e scelta a mano): è la regola di casa.
+   ============================================================ */
+:root[data-schema="grafite"]{
+  --navy: #1C1F26;
+  --navy-scuro: #101216;
+  --ambra: #4C9AFF;
+  --bg: #F4F5F7;
+  --surface: #ffffff;
+  --surface-2: #F8F9FA;
+  --surface-3: #EEF0F3;
+  --border: #E1E4E8;
+  --border-strong: #C9CED6;
+  --text: #1B1F27;
+  --text-dim: #4B5563;
+  --text-faint: #9AA3B2;
+  --accent: #2F6FED;
+  --accent-soft: #E8F0FE;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-schema="grafite"]:not([data-tema="chiaro"]){
+    --bg: #0F1115;
+    --surface: #171A20;
+    --surface-2: #1D2129;
+    --surface-3: #252A33;
+    --border: #2A2F3A;
+    --border-strong: #3A4150;
+    --text: #F2F4F8;
+    --text-dim: #A8B0BF;
+    --text-faint: #6E7787;
+    --accent: #5B8DFF;
+    --accent-soft: #17224A;
+    --su-pieno: #0F1115;
+  }
+}
+:root[data-schema="grafite"][data-tema="scuro"]{
+  --bg: #0F1115;
+  --surface: #171A20;
+  --surface-2: #1D2129;
+  --surface-3: #252A33;
+  --border: #2A2F3A;
+  --border-strong: #3A4150;
+  --text: #F2F4F8;
+  --text-dim: #A8B0BF;
+  --text-faint: #6E7787;
+  --accent: #5B8DFF;
+  --accent-soft: #17224A;
+  --su-pieno: #0F1115;
+}
+:root[data-schema="bosco"]{
+  --navy: #1D3B2A;
+  --navy-scuro: #122718;
+  --ambra: #D9A441;
+  --bg: #F1F5F1;
+  --surface: #ffffff;
+  --surface-2: #F7FAF7;
+  --surface-3: #EAF1EA;
+  --border: #DCE5DC;
+  --border-strong: #C2D0C2;
+  --text: #16241A;
+  --text-dim: #47584C;
+  --text-faint: #8CA093;
+  --accent: #256B44;
+  --accent-soft: #E3F2E9;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-schema="bosco"]:not([data-tema="chiaro"]){
+    --bg: #0D1A12;
+    --surface: #16281C;
+    --surface-2: #1D3325;
+    --surface-3: #254030;
+    --border: #2A4534;
+    --border-strong: #3A5A46;
+    --text: #EEF5F0;
+    --text-dim: #B2C4B8;
+    --text-faint: #7C927F;
+    --accent: #58C287;
+    --accent-soft: #163C2C;
+    --su-pieno: #0D1A12;
+  }
+}
+:root[data-schema="bosco"][data-tema="scuro"]{
+  --bg: #0D1A12;
+  --surface: #16281C;
+  --surface-2: #1D3325;
+  --surface-3: #254030;
+  --border: #2A4534;
+  --border-strong: #3A5A46;
+  --text: #EEF5F0;
+  --text-dim: #B2C4B8;
+  --text-faint: #7C927F;
+  --accent: #58C287;
+  --accent-soft: #163C2C;
+  --su-pieno: #0D1A12;
+}
+:root[data-schema="carta"]{
+  --navy: #4A3F35;
+  --navy-scuro: #32291F;
+  --ambra: #C96F4A;
+  --bg: #F6F1E7;
+  --surface: #FFFCF5;
+  --surface-2: #FAF6EC;
+  --surface-3: #F0E9DB;
+  --border: #E4DBC8;
+  --border-strong: #CFC3AA;
+  --text: #2A2118;
+  --text-dim: #5C4F3F;
+  --text-faint: #9C8D77;
+  --accent: #B95C38;
+  --accent-soft: #F7E4DA;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-schema="carta"]:not([data-tema="chiaro"]){
+    --bg: #201A12;
+    --surface: #2B2318;
+    --surface-2: #342B1E;
+    --surface-3: #3E3425;
+    --border: #453A28;
+    --border-strong: #5A4D36;
+    --text: #F3EDE2;
+    --text-dim: #C9BBA4;
+    --text-faint: #93866F;
+    --accent: #E08A5E;
+    --accent-soft: #3B2A18;
+    --su-pieno: #201A12;
+  }
+}
+:root[data-schema="carta"][data-tema="scuro"]{
+  --bg: #201A12;
+  --surface: #2B2318;
+  --surface-2: #342B1E;
+  --surface-3: #3E3425;
+  --border: #453A28;
+  --border-strong: #5A4D36;
+  --text: #F3EDE2;
+  --text-dim: #C9BBA4;
+  --text-faint: #93866F;
+  --accent: #E08A5E;
+  --accent-soft: #3B2A18;
+  --su-pieno: #201A12;
+}
+
+/* ---- il wizard e le liste riordinabili di Config ---- */
+.velo-wizard{position:fixed;inset:0;z-index:80;background:var(--bg);overflow:auto;padding:40px 20px}
+.wizard{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.wizard .passi{display:flex;gap:6px}
+.wizard .passi i{flex:1;height:4px;border-radius:99px;background:var(--surface-3)}
+.wizard .passi i[data-fatto="true"]{background:var(--accent)}
+.wizard h1{font-size:22px;letter-spacing:-.02em}
+.wizard .sotto{font-size:13.5px;color:var(--text-dim);line-height:1.55}
+.wizard .card{padding:18px}
+.scelta-moduli{display:flex;flex-direction:column;gap:4px}
+.scelta-moduli label{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:13.5px;cursor:pointer}
+.scelta-moduli label:hover{background:var(--surface-2)}
+.scelta-moduli input{accent-color:var(--accent);width:16px;height:16px}
+.scelta-schemi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.scelta-schemi button{
+  display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;font-size:13.5px;
+  background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);
+}
+.scelta-schemi button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--text);font-weight:600}
+.scelta-schemi .pallini{display:flex;gap:3px}
+.scelta-schemi .pallini i{width:14px;height:14px;border-radius:99px;border:1px solid rgba(0,0,0,.12)}
+.riordino{display:flex;flex-direction:column;gap:3px}
+.riordino .voce{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;font-size:13px;background:var(--surface-2);border:1px solid var(--border)}
+.riordino .voce[data-spenta="true"]{opacity:.5}
+.riordino .voce .n{flex:1}
+.riordino .voce button{padding:2px 7px;border-radius:6px;color:var(--text-faint);font-size:12px}
+.riordino .voce button:hover{background:var(--surface-3);color:var(--text)}

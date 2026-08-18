@@ -27,6 +27,8 @@ Una riga sola: chi sei e le tue preferenze.
 | PesoObiettivo | numero, 1 decimale | vuoto = nessun traguardo sulla curva |
 | Settori | testo lungo | JSON: le colonne dei Cicli Aperti, in ordine; vuoto = le quattro predefinite |
 | PasswordHash | testo | la password scelta da Config, come hash; vuoto = vale quella d'ambiente |
+| Interfaccia | testo lungo | JSON: moduli, ordine di menu e Home, tema; vuoto = tutto attivo |
+| ConfiguratoIl | data e ora | quando è finito il wizard; vuoto = riparte al prossimo accesso |
 
 ## Persone
 

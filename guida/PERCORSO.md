@@ -121,6 +121,11 @@ quando vuoi (tasto destro sul suo nome → Delete table).
 fra le cose da fare c'è "Giulia" collegata. La tua dashboard funziona:
 da qui in poi sono rifiniture.
 
+Nota: al primo ingresso, prima della barra, ti accoglie la
+configurazione iniziale: il nome della tua dashboard, quali moduli
+accendere, i colori. Tre passi e si entra; si può rifare quando vuoi
+da Config.
+
 ---
 
 ## Tappa 7 (facoltativa): Telegram, per parlarle dal telefono
@@ -189,9 +194,9 @@ Da qui in poi lavori direttamente col tuo Claude, senza percorso:
   spiegato nella descrizione del campo), il peso obiettivo se ne hai uno.
 - Gli **obiettivi**: si scrivono direttamente in dashboard, colonna per
   colonna.
-- La pagina **Config** (dal menu in alto a sinistra): il tema chiaro o
-  scuro, nome e cognome, e la password nuova al posto di quella di
-  partenza.
+- La pagina **Config** (dal menu in alto a sinistra): schema colori e
+  tema, moduli da accendere o spegnere, l'ordine di menu e Home, nome e
+  cognome, la password nuova, e il wizard da rifare quando vuoi.
 - Un **programma di allenamento**: chiedi al tuo Claude di prepararne uno
   nel formato di `/api/allenamento/importa` (il formato è documentato nel
   file di quella rotta) e di caricartelo.
