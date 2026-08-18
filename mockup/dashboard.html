@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — mockup</title>
+<style>
+/* ============================================================
+   TOKENS — tutti i colori vivono qui. Cambiare l'accento
+   significa toccare una riga sola.
+   ============================================================ */
+:root{
+  --bg:            #f6f6f7;
+  --surface:       #ffffff;
+  --surface-2:     #fafafa;
+  --surface-3:     #f1f1f3;
+  --border:        #e4e4e7;
+  --border-strong: #d4d4d8;
+
+  --text:          #18181b;
+  --text-dim:      #6b6b73;
+  --text-faint:    #a1a1aa;
+
+  --accent:        #2f6fed;
+  --accent-soft:   #e8f0fe;
+  --ok:            #16a34a;
+  --ok-soft:       #e7f6ec;
+  --warn:          #d97706;
+  --warn-soft:     #fdf1e0;
+  --bad:           #dc2626;
+  --bad-soft:      #fdeaea;
+
+  --hot:           #dc2626;
+  --warm:          #d97706;
+  --cold:          #71717a;
+
+  --radius:        14px;
+  --radius-sm:     9px;
+  --shadow:        0 1px 2px rgba(24,24,27,.05), 0 4px 16px rgba(24,24,27,.04);
+
+  --font:          var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:     var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --bar-h:         64px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:            #0c0c0e;
+    --surface:       #141417;
+    --surface-2:     #1a1a1e;
+    --surface-3:     #232328;
+    --border:        #26262b;
+    --border-strong: #33333a;
+
+    --text:          #f4f4f5;
+    --text-dim:      #a1a1aa;
+    --text-faint:    #71717a;
+
+    --accent:        #5b8dff;
+    --accent-soft:   #17224a;
+    --ok:            #4ade80;
+    --ok-soft:       #14301f;
+    --warn:          #fbbf24;
+    --warn-soft:     #33260c;
+    --bad:           #f87171;
+    --bad-soft:      #3a1a1a;
+
+    --hot:           #f87171;
+    --warm:          #fbbf24;
+    --cold:          #8a8a93;
+
+    --shadow:        0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.25);
+  }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  font-size:14px;
+  line-height:1.5;
+  padding-bottom:calc(var(--bar-h) + 28px);
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input{font:inherit;color:inherit}
+ul{list-style:none}
+
+/* i numeri stanno fermi: cifre a larghezza fissa, allineati a destra */
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;text-align:right}
+.pos{color:var(--ok)} .neg{color:var(--bad)} .due{color:var(--warn)}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;gap:20px;
+  height:56px;padding:0 22px;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.nav{display:flex;gap:2px;margin-left:8px}
+.nav button{
+  padding:6px 13px;border-radius:8px;color:var(--text-dim);
+  font-weight:500;font-size:13.5px;transition:background .12s,color .12s;
+}
+.nav button:hover{background:var(--surface-3);color:var(--text)}
+.nav button[aria-current="true"]{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.topbar .spacer{flex:1}
+.topbar .meta{display:flex;align-items:center;gap:14px;color:var(--text-faint);font-size:12.5px}
+.topbar .meta .num{font-size:13px;color:var(--text-dim)}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:500;
+  background:var(--surface-3);color:var(--text-dim);
+}
+.pill.live{background:var(--ok-soft);color:var(--ok)}
+.pill.live .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ============================================================
+   GRIGLIA
+   ============================================================ */
+.screen{display:none}
+.screen[data-active="true"]{display:block}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+  padding:20px 22px 0;
+  max-width:none;      /* a tutta larghezza, sempre */
+}
+.col-3{grid-column:span 3} .col-4{grid-column:span 4}
+.col-5{grid-column:span 5} .col-6{grid-column:span 6}
+.col-7{grid-column:span 7} .col-8{grid-column:span 8}
+.col-9{grid-column:span 9} .col-12{grid-column:span 12}
+@media (max-width:1280px){
+  .col-3,.col-4,.col-5{grid-column:span 6}
+  .col-7,.col-8,.col-9{grid-column:span 12}
+}
+@media (max-width:760px){
+  .grid{grid-template-columns:1fr;padding:14px 14px 0}
+  [class^="col-"]{grid-column:span 1 !important}
+}
+
+/* ============================================================
+   SCHEDE
+   ============================================================ */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.card > header{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px 11px;
+}
+.card > header h2{
+  font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text-faint);
+}
+.card > header .spacer{flex:1}
+.card > header .hint{font-size:11.5px;color:var(--text-faint)}
+.card .body{padding:0 16px 16px;flex:1}
+.card .foot{
+  padding:10px 16px;border-top:1px solid var(--border);
+  background:var(--surface-2);
+  display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-faint);
+}
+.icon{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---- Operator ---- */
+.operator{display:flex;gap:14px;align-items:flex-start}
+.avatar{
+  width:46px;height:46px;border-radius:12px;flex:none;
+  background:linear-gradient(140deg,var(--accent),#8b5cf6);
+  color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;letter-spacing:-.02em;
+}
+.operator .who{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.operator .role{font-size:12.5px;color:var(--text-dim);margin-top:1px}
+.focus{
+  margin-top:13px;padding:11px 13px;border-radius:var(--radius-sm);
+  background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 18%,transparent);
+}
+.focus .label{font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.focus .value{font-size:14px;font-weight:500;line-height:1.4}
+.streak{display:flex;align-items:baseline;gap:6px;margin-top:12px;color:var(--text-dim);font-size:12.5px}
+.streak strong{font-family:var(--font-mono);font-size:19px;color:var(--text);font-weight:600}
+
+/* ---- Session ---- */
+.clock{display:flex;align-items:baseline;gap:10px}
+.clock .time{font-family:var(--font-mono);font-size:38px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.clock .greet{font-size:14px;color:var(--text-dim)}
+.session .date{font-size:12.5px;color:var(--text-faint);margin-top:5px;text-transform:capitalize}
+.today{margin-top:16px;display:flex;flex-direction:column;gap:7px}
+.today .lab{font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);margin-bottom:2px}
+.task-row{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 11px;border-radius:var(--radius-sm);
+  background:var(--surface-2);border:1px solid var(--border);
+  cursor:pointer;transition:border-color .12s,transform .12s;
+}
+.task-row:hover{border-color:var(--border-strong);transform:translateX(2px)}
+.task-row .rank{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);width:12px}
+.task-row .t{flex:1;font-size:13.5px;font-weight:500}
+.task-row .p{font-size:12px;color:var(--text-dim)}
+.temp{width:7px;height:7px;border-radius:50%;flex:none}
+.temp.hot{background:var(--hot)} .temp.warm{background:var(--warm)} .temp.cold{background:var(--cold)}
+.band{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:5px}
+.band.ritardo{background:var(--bad-soft);color:var(--bad)}
+.band.oggi{background:var(--warn-soft);color:var(--warn)}
+.band.settimana{background:var(--accent-soft);color:var(--accent)}
+.band.avanti{background:var(--surface-3);color:var(--text-dim)}
+
+/* ---- Abitudini ---- */
+.habits{display:flex;gap:16px;align-items:flex-start}
+.ring{position:relative;width:84px;height:84px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--font-mono);font-size:19px;font-weight:600;letter-spacing:-.02em;
+}
+.habit-list{flex:1;display:flex;flex-direction:column;gap:5px}
+.habit{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 10px;border-radius:var(--radius-sm);
+  background:var(--surface-2);border:1px solid var(--border);cursor:pointer;
+  transition:border-color .12s;
+}
+.habit:hover{border-color:var(--border-strong)}
+.habit .box{
+  width:17px;height:17px;border-radius:5px;border:1.6px solid var(--border-strong);
+  flex:none;display:grid;place-items:center;color:transparent;
+}
+.habit[data-done="true"] .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.habit[data-done="true"] .name{color:var(--text-dim)}
+.habit .name{flex:1;font-size:13px}
+.habit .count{font-family:var(--font-mono);font-size:12px;color:var(--text-dim)}
+.habit .track{width:52px;height:4px;border-radius:99px;background:var(--surface-3);overflow:hidden;flex:none}
+.habit .track i{display:block;height:100%;background:var(--accent);border-radius:99px}
+
+/* ---- Calendario ---- */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
+.day{
+  padding:8px 0 9px;border-radius:var(--radius-sm);text-align:center;
+  background:var(--surface-2);border:1px solid var(--border);cursor:pointer;
+  transition:border-color .12s,background .12s;
+}
+.day:hover{border-color:var(--border-strong)}
+.day .dow{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-faint)}
+.day .dnum{font-family:var(--font-mono);font-size:16px;font-weight:600;margin-top:2px}
+.day .pips{display:flex;gap:2.5px;justify-content:center;margin-top:5px;height:4px}
+.day .pips i{width:4px;height:4px;border-radius:50%;background:var(--text-faint)}
+.day[data-today="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.day[data-today="true"] .dnum{color:var(--accent)}
+.day[data-sel="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.agenda{display:flex;flex-direction:column;gap:1px;position:relative}
+.ev{display:flex;gap:11px;padding:8px 0;border-top:1px solid var(--border)}
+.ev:first-child{border-top:none}
+.ev .h{font-family:var(--font-mono);font-size:12px;color:var(--text-dim);width:78px;flex:none}
+.ev .t{flex:1;font-size:13px;font-weight:500}
+.ev .src{font-size:11px;color:var(--text-faint)}
+.nowline{display:flex;align-items:center;gap:8px;padding:3px 0}
+.nowline .lab{font-family:var(--font-mono);font-size:10.5px;color:var(--bad);font-weight:600}
+.nowline .l{flex:1;height:1.5px;background:var(--bad);border-radius:2px;opacity:.6}
+
+/* ---- Blocchi ---- */
+.block{display:flex;align-items:center;gap:11px;padding:9px 0;border-top:1px solid var(--border)}
+.block:first-child{border-top:none}
+.block .t{flex:1;font-size:13px;font-weight:500}
+.block .p{font-size:12px;color:var(--text-dim)}
+.block .age{font-family:var(--font-mono);font-size:12px;color:var(--bad);font-weight:600}
+
+/* ---- Polso finanziario ---- */
+.net{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.net .v{font-family:var(--font-mono);font-size:34px;font-weight:600;letter-spacing:-.03em}
+.deltas{display:flex;gap:18px;margin-top:12px}
+.deltas div{display:flex;flex-direction:column;gap:1px}
+.deltas .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)}
+.deltas .v{font-family:var(--font-mono);font-size:14px;font-weight:600}
+.cats{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.cat{display:flex;align-items:center;gap:10px;font-size:13px}
+.cat .sw{width:8px;height:8px;border-radius:2.5px;flex:none}
+.cat .n{flex:1;color:var(--text-dim)}
+.cat .v{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:500}
+.stack{display:flex;height:8px;border-radius:99px;overflow:hidden;margin-top:14px;background:var(--surface-3)}
+.stack i{display:block;height:100%}
+.note{
+  margin-top:12px;padding:9px 11px;border-radius:var(--radius-sm);
+  background:var(--warn-soft);color:var(--warn);font-size:12px;line-height:1.45;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:500;
+  background:var(--surface-3);color:var(--text);transition:background .12s;
+}
+.btn:hover{background:var(--border)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.07)}
+
+/* ---- Nutrizione ---- */
+.kcal{display:flex;align-items:baseline;gap:8px}
+.kcal .v{font-family:var(--font-mono);font-size:30px;font-weight:600;letter-spacing:-.03em}
+.kcal .goal{font-size:13px;color:var(--text-faint)}
+.kbar{height:7px;border-radius:99px;background:var(--surface-3);margin-top:9px;overflow:hidden}
+.kbar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.macros{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:14px}
+.macro .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)}
+.macro .v{font-family:var(--font-mono);font-size:15px;font-weight:600;margin-top:1px}
+.macro .b{height:4px;border-radius:99px;background:var(--surface-3);margin-top:5px;overflow:hidden}
+.macro .b i{display:block;height:100%;border-radius:99px}
+.meals{margin-top:14px;display:flex;flex-direction:column}
+.meal{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border);cursor:pointer}
+.meal .h{font-family:var(--font-mono);font-size:11.5px;color:var(--text-faint);width:38px;flex:none}
+.meal .n{flex:1;font-size:13px}
+.meal .c{font-family:var(--font-mono);font-size:12.5px;font-weight:500}
+.est{font-size:10px;padding:1px 5px;border-radius:4px;background:var(--surface-3);color:var(--text-faint);font-weight:500}
+
+/* ---- Salute (30 giorni) ---- */
+.spark{width:100%;height:64px;display:block;overflow:visible}
+.avg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.avg div .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)}
+.avg div .v{font-family:var(--font-mono);font-size:16px;font-weight:600;margin-top:1px}
+.basis{font-size:11.5px;color:var(--text-faint);margin-top:10px}
+
+/* ---- Obiettivi ---- */
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:640px){.goals{grid-template-columns:1fr}}
+.goals h3{font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px}
+.goal{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid var(--border)}
+.goal:first-of-type{border-top:none}
+.goal .box{width:16px;height:16px;border-radius:5px;border:1.6px solid var(--border-strong);flex:none;display:grid;place-items:center;color:transparent}
+.goal[data-done="true"] .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.goal[data-done="true"] .n{color:var(--text-faint);text-decoration:line-through}
+.goal .n{flex:1;font-size:13px}
+.goal .prog{font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim)}
+.goal .x{color:var(--text-faint);opacity:0;transition:opacity .12s}
+.goal:hover .x{opacity:1}
+.add{display:flex;align-items:center;gap:8px;margin-top:9px;padding:7px 10px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px dashed var(--border-strong);color:var(--text-faint);font-size:12.5px}
+
+/* ============================================================
+   CRM
+   ============================================================ */
+.views{display:flex;gap:2px;background:var(--surface-3);padding:3px;border-radius:9px}
+.views button{padding:5px 12px;border-radius:6px;font-size:12.5px;font-weight:500;color:var(--text-dim)}
+.views button[aria-current="true"]{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.search{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 13px;border-radius:var(--radius-sm);
+  background:var(--surface-2);border:1px solid var(--border);
+  margin-bottom:14px;
+}
+.search input{flex:1;background:none;border:none;outline:none;font-size:13.5px}
+.search input::placeholder{color:var(--text-faint)}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:1100px){.kanban{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.kanban{grid-template-columns:1fr}}
+.col{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:10px}
+.col > h3{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);padding:2px 4px 10px}
+.col > h3 .n{margin-left:auto;font-family:var(--font-mono);font-size:11px}
+.cards{display:flex;flex-direction:column;gap:7px}
+.tcard{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:10px 11px;cursor:grab;transition:border-color .12s,box-shadow .12s;
+}
+.tcard:hover{border-color:var(--border-strong);box-shadow:var(--shadow)}
+.tcard .t{font-size:13px;font-weight:500;line-height:1.35}
+.tcard .row{display:flex;align-items:center;gap:7px;margin-top:7px}
+.tcard .p{font-size:11.5px;color:var(--text-dim)}
+.tag{font-size:10.5px;padding:1.5px 6px;border-radius:5px;background:var(--surface-3);color:var(--text-dim)}
+.byperson{display:flex;flex-direction:column;gap:14px}
+.pgroup > h3{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.pgroup > h3 .org{font-weight:400;font-size:12px;color:var(--text-faint)}
+.pgroup > h3 .n{margin-left:auto;font-family:var(--font-mono);font-size:11.5px;color:var(--text-faint)}
+
+/* pannello laterale */
+.panel{
+  position:fixed;top:0;right:0;bottom:0;width:380px;max-width:92vw;z-index:60;
+  background:var(--surface);border-left:1px solid var(--border);
+  box-shadow:-12px 0 40px rgba(0,0,0,.10);
+  display:flex;flex-direction:column;
+}
+.panel header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.panel header h2{font-size:13px;font-weight:600}
+.panel .body{padding:16px;display:flex;flex-direction:column;gap:14px;overflow:auto;flex:1}
+.field .k{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);margin-bottom:5px}
+.field .in{padding:9px 11px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--border);font-size:13.5px}
+.field textarea.in{width:100%;resize:vertical;min-height:70px;outline:none;font-family:inherit}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{padding:5px 10px;border-radius:7px;font-size:12px;background:var(--surface-2);border:1px solid var(--border);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:500}
+.panel .foot{display:flex;gap:8px;padding:13px 16px;border-top:1px solid var(--border);background:var(--surface-2)}
+.btn.ok{background:var(--ok);color:#fff}
+.btn.danger{background:var(--bad-soft);color:var(--bad)}
+
+/* ============================================================
+   FINANZE
+   ============================================================ */
+.bigfig{font-family:var(--font-mono);font-size:46px;font-weight:600;letter-spacing:-.035em;line-height:1}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{
+  text-align:left;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-faint);padding:0 10px 8px;border-bottom:1px solid var(--border);
+}
+.tbl th.r,.tbl td.r{text-align:right}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--border)}
+.tbl tbody tr:hover{background:var(--surface-2)}
+.tbl td.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.tbl tr.sub td{color:var(--text-dim);font-size:12.5px}
+
+/* ============================================================
+   REVIEW
+   ============================================================ */
+.rstat{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.rstat{grid-template-columns:1fr 1fr}}
+.rstat .b{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 13px}
+.rstat .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)}
+.rstat .v{font-family:var(--font-mono);font-size:26px;font-weight:600;letter-spacing:-.03em;margin-top:2px}
+.rstat .s{font-size:11.5px;color:var(--text-dim);margin-top:1px}
+.rlist{display:flex;flex-direction:column}
+.rlist li{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border);font-size:13px}
+.rlist li:first-child{border-top:none}
+.rlist .p{color:var(--text-dim);font-size:12px;margin-left:auto}
+.prio{display:flex;flex-direction:column;gap:8px}
+.prio li{display:flex;gap:11px;align-items:flex-start;padding:11px 12px;border-radius:var(--radius-sm);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 18%,transparent)}
+.prio .r{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--accent)}
+.prio .t{font-size:13.5px;font-weight:500;line-height:1.4}
+
+/* ============================================================
+   BARRA DI CATTURA
+   ============================================================ */
+.capture{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  padding:14px 22px 18px;
+  background:linear-gradient(to top, var(--bg) 62%, transparent);
+}
+.capture .wrap{
+  display:flex;align-items:center;gap:11px;
+  height:var(--bar-h);padding:0 12px 0 16px;
+  background:var(--surface);border:1px solid var(--border-strong);
+  border-radius:16px;box-shadow:0 6px 28px rgba(0,0,0,.10);
+}
+.capture input{flex:1;background:none;border:none;outline:none;font-size:15px}
+.capture input::placeholder{color:var(--text-faint)}
+.mic{
+  width:38px;height:38px;border-radius:11px;flex:none;
+  display:grid;place-items:center;background:var(--surface-3);color:var(--text-dim);
+  transition:background .12s,color .12s;
+}
+.mic:hover{background:var(--border);color:var(--text)}
+.mic[data-listening="true"]{background:var(--bad);color:#fff;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--bad) 45%,transparent)}50%{box-shadow:0 0 0 8px transparent}}
+.send{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;background:var(--accent);color:#fff}
+.capture .state{font-size:12.5px;color:var(--text-faint);padding-right:4px}
+.capture .state.done{color:var(--ok);font-weight:500}
+.answer{
+  max-width:none;margin:0 0 10px;padding:15px 17px;
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  box-shadow:0 6px 28px rgba(0,0,0,.10);font-size:13.5px;line-height:1.55;
+}
+.answer .src{margin-top:9px;font-size:11.5px;color:var(--text-faint)}
+</style>
+</head>
+<body>
+
+<!-- ============ BARRA IN ALTO ============ -->
+<header class="topbar" id="topbar">
+  <div class="brand"><span class="dot"></span> Dashboard</div>
+  <nav class="nav" id="nav">
+    <button data-screen="home" aria-current="true">Home</button>
+    <button data-screen="crm">CRM</button>
+    <button data-screen="finanze">Finanze</button>
+    <button data-screen="review">Review</button>
+  </nav>
+  <div class="spacer"></div>
+  <div class="meta">
+    <span class="pill live"><span class="dot"></span> in linea</span>
+    <span class="num" id="topclock">--:--</span>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<div class="screen" id="screen-home" data-active="true">
+<div class="grid">
+
+  <!-- Operator -->
+  <section class="card col-3" id="card-operator">
+    <header><h2>Operator</h2></header>
+    <div class="body">
+      <div class="operator">
+        <div class="avatar">AT</div>
+        <div>
+          <div class="who">Nome</div>
+          <div class="role">Il tuo ruolo · La tua città</div>
+        </div>
+      </div>
+      <div class="focus">
+        <div class="label">Focus di oggi</div>
+        <div class="value">Chiudere la proposta per il gruppo nuovo</div>
+      </div>
+      <div class="streak">
+        <strong>23</strong> giorni di fila con almeno un'abitudine
+      </div>
+    </div>
+  </section>
+
+  <!-- Session -->
+  <section class="card col-5" id="card-session">
+    <header><h2>Session</h2><div class="spacer"></div><span class="hint">dal CRM</span></header>
+    <div class="body session">
+      <div class="clock">
+        <span class="time" id="bigclock">--:--</span>
+        <span class="greet">Buongiorno</span>
+      </div>
+      <div class="date" id="bigdate">venerdì 14 agosto 2026</div>
+      <div class="today">
+        <div class="lab">Le tre cose di oggi</div>
+        <div class="task-row">
+          <span class="rank">1</span><span class="temp hot"></span>
+          <span class="t">Richiamare per il rinnovo del contratto</span>
+          <span class="p">Beatrice</span><span class="band ritardo">In ritardo</span>
+        </div>
+        <div class="task-row">
+          <span class="rank">2</span><span class="temp hot"></span>
+          <span class="t">Mandare il preventivo delle tre sedi</span>
+          <span class="p">Luca</span><span class="band ritardo">In ritardo</span>
+        </div>
+        <div class="task-row">
+          <span class="rank">3</span><span class="temp warm"></span>
+          <span class="t">Rivedere i numeri del trimestre</span>
+          <span class="p">Marco</span><span class="band oggi">Oggi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abitudini -->
+  <section class="card col-4" id="card-abitudini">
+    <header><h2>Abitudini</h2><div class="spacer"></div><span class="hint">oggi</span></header>
+    <div class="body">
+      <div class="habits">
+        <div class="ring">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <circle cx="42" cy="42" r="35" stroke="var(--surface-3)" stroke-width="8" fill="none"/>
+            <circle cx="42" cy="42" r="35" stroke="var(--accent)" stroke-width="8" fill="none"
+                    stroke-linecap="round" stroke-dasharray="219.9" stroke-dashoffset="79.2"/>
+          </svg>
+          <div class="val">64%</div>
+        </div>
+        <div class="habit-list">
+          <div class="habit" data-done="true">
+            <span class="box"><svg class="icon" style="width:11px;height:11px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="name">Allenamento</span>
+          </div>
+          <div class="habit" data-done="true">
+            <span class="box"><svg class="icon" style="width:11px;height:11px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="name">Lettura</span>
+          </div>
+          <div class="habit">
+            <span class="box"></span>
+            <span class="name">Acqua</span>
+            <span class="track"><i style="width:62%"></i></span>
+            <span class="count">5/8</span>
+          </div>
+          <div class="habit">
+            <span class="box"></span>
+            <span class="name">Blocchi di lavoro</span>
+            <span class="track"><i style="width:66%"></i></span>
+            <span class="count">2/3</span>
+          </div>
+          <div class="habit">
+            <span class="box"></span>
+            <span class="name">Niente schermi dopo le 22</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendario -->
+  <section class="card col-5" id="card-calendario">
+    <header>
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+      <h2>Calendario</h2><div class="spacer"></div><span class="hint">Google · sola lettura</span>
+    </header>
+    <div class="body">
+      <div class="week">
+        <div class="day"><div class="dow">lun</div><div class="dnum">10</div><div class="pips"><i></i><i></i></div></div>
+        <div class="day"><div class="dow">mar</div><div class="dnum">11</div><div class="pips"><i></i></div></div>
+        <div class="day"><div class="dow">mer</div><div class="dnum">12</div><div class="pips"><i></i><i></i><i></i></div></div>
+        <div class="day"><div class="dow">gio</div><div class="dnum">13</div><div class="pips"><i></i></div></div>
+        <div class="day" data-today="true" data-sel="true"><div class="dow">ven</div><div class="dnum">14</div><div class="pips"><i></i><i></i><i></i></div></div>
+        <div class="day"><div class="dow">sab</div><div class="dnum">15</div><div class="pips"></div></div>
+        <div class="day"><div class="dow">dom</div><div class="dnum">16</div><div class="pips"><i></i></div></div>
+      </div>
+      <div class="agenda">
+        <div class="ev"><span class="h">09:00 – 09:30</span><span class="t">Punto settimanale con il team</span><span class="src">Lavoro</span></div>
+        <div class="ev"><span class="h">11:00 – 12:00</span><span class="t">Chiamata gruppo nuovo</span><span class="src">Lavoro</span></div>
+        <div class="nowline"><span class="lab">14:22</span><span class="l"></span></div>
+        <div class="ev"><span class="h">16:30 – 17:15</span><span class="t">Formazione venditori</span><span class="src">Lavoro</span></div>
+        <div class="ev"><span class="h">19:00</span><span class="t">Cena a casa dei miei</span><span class="src">Personale</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blocchi -->
+  <section class="card col-4" id="card-blocchi">
+    <header>
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+      <h2>Cosa è fermo</h2><div class="spacer"></div><span class="hint">e per colpa di chi</span>
+    </header>
+    <div class="body">
+      <div class="block"><span class="temp hot"></span><span class="t">Firma del contratto quadro</span><span class="p">Luca</span><span class="age">12 g</span></div>
+      <div class="block"><span class="temp hot"></span><span class="t">Listino aggiornato per il 2027</span><span class="p">Beatrice</span><span class="age">9 g</span></div>
+      <div class="block"><span class="temp warm"></span><span class="t">Accesso al gestionale della sede nuova</span><span class="p">Marco</span><span class="age">5 g</span></div>
+      <div class="block"><span class="temp cold"></span><span class="t">Risposta sul preventivo assicurativo</span><span class="p">Studio</span><span class="age">3 g</span></div>
+    </div>
+  </section>
+
+  <!-- Polso finanziario -->
+  <section class="card col-3" id="card-polso">
+    <header>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg>
+      <h2>Polso finanziario</h2>
+    </header>
+    <div class="body">
+      <div class="net"><span class="v">248.310 €</span></div>
+      <div class="deltas">
+        <div><span class="k">30 giorni</span><span class="v pos">+3.140</span></div>
+        <div><span class="k">1 anno</span><span class="v pos">+28.900</span></div>
+      </div>
+      <div class="stack">
+        <i style="width:22%;background:var(--accent)"></i>
+        <i style="width:63%;background:#8b5cf6"></i>
+        <i style="width:15%;background:var(--bad)"></i>
+      </div>
+      <div class="cats">
+        <div class="cat"><span class="sw" style="background:var(--accent)"></span><span class="n">Liquidità</span><span class="v">61.400 €</span></div>
+        <div class="cat"><span class="sw" style="background:#8b5cf6"></span><span class="n">Investito</span><span class="v">228.700 €</span></div>
+        <div class="cat"><span class="sw" style="background:var(--bad)"></span><span class="n">Debiti</span><span class="v">-41.790 €</span></div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg> Aggiorna</button>
+      <span>aggiornato alle 09:41</span>
+    </div>
+  </section>
+
+  <!-- Obiettivi -->
+  <section class="card col-12" id="card-obiettivi">
+    <header><h2>Obiettivi</h2></header>
+    <div class="body">
+      <div class="goals">
+        <div>
+          <h3>Questa settimana</h3>
+          <div class="goal" data-done="true">
+            <span class="box"><svg class="icon" style="width:11px;height:11px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="n">Chiudere il listino 2027</span><span class="x">×</span>
+          </div>
+          <div class="goal"><span class="box"></span><span class="n">Tre chiamate nuove</span><span class="prog">2/3</span><span class="x">×</span></div>
+          <div class="goal"><span class="box"></span><span class="n">Rivedere i costi fissi</span><span class="x">×</span></div>
+          <div class="add">+ aggiungi</div>
+        </div>
+        <div>
+          <h3>Questo mese</h3>
+          <div class="goal"><span class="box"></span><span class="n">Due gruppi nuovi a bordo</span><span class="prog">1/2</span><span class="x">×</span></div>
+          <div class="goal"><span class="box"></span><span class="n">Chiudere il bilancio di metà anno</span><span class="x">×</span></div>
+          <div class="goal" data-done="true">
+            <span class="box"><svg class="icon" style="width:11px;height:11px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="n">Ferie prenotate</span><span class="x">×</span>
+          </div>
+          <div class="add">+ aggiungi</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ============ CRM ============ -->
+<div class="screen" id="screen-crm">
+<div class="grid">
+  <section class="card col-12" id="card-crm">
+    <header>
+      <h2>CRM</h2><div class="spacer"></div>
+      <div class="views">
+        <button aria-current="true">Kanban</button>
+        <button>Per persona</button>
+      </div>
+    </header>
+    <div class="body">
+      <div class="search">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input placeholder="Cosa posso chiudere in dieci minuti mentre aspetto il treno?">
+        <span class="pill">Invio</span>
+      </div>
+
+      <div class="kanban">
+        <div class="col">
+          <h3><span class="temp hot"></span> In ritardo <span class="n">4</span></h3>
+          <div class="cards">
+            <div class="tcard">
+              <div class="t">Richiamare per il rinnovo del contratto</div>
+              <div class="row"><span class="temp hot"></span><span class="p">Beatrice</span><span class="tag">contratti</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Mandare il preventivo delle tre sedi</div>
+              <div class="row"><span class="temp hot"></span><span class="p">Luca</span><span class="tag">offerte</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Firma del contratto quadro</div>
+              <div class="row"><span class="temp warm"></span><span class="p">Luca</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Listino aggiornato per il 2027</div>
+              <div class="row"><span class="temp warm"></span><span class="p">Beatrice</span><span class="tag">listini</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <h3><span class="temp warm"></span> Oggi <span class="n">3</span></h3>
+          <div class="cards">
+            <div class="tcard">
+              <div class="t">Rivedere i numeri del trimestre</div>
+              <div class="row"><span class="temp warm"></span><span class="p">Marco</span><span class="tag">numeri</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Preparare le slide della formazione</div>
+              <div class="row"><span class="temp warm"></span><span class="p">—</span><span class="tag">formazione</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Rispondere allo studio sul preventivo</div>
+              <div class="row"><span class="temp cold"></span><span class="p">Studio</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <h3><span class="temp cold"></span> Questa settimana <span class="n">3</span></h3>
+          <div class="cards">
+            <div class="tcard">
+              <div class="t">Preparare il giro di visite del mese</div>
+              <div class="row"><span class="temp warm"></span><span class="p">—</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Chiudere le ferie di agosto</div>
+              <div class="row"><span class="temp cold"></span><span class="p">Sara</span><span class="tag">personale</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Rivedere il contratto della sede nuova</div>
+              <div class="row"><span class="temp cold"></span><span class="p">Marco</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <h3><span class="temp cold"></span> Più avanti <span class="n">2</span></h3>
+          <div class="cards">
+            <div class="tcard">
+              <div class="t">Valutare il gestionale nuovo</div>
+              <div class="row"><span class="temp cold"></span><span class="p">—</span><span class="tag">strumenti</span></div>
+            </div>
+            <div class="tcard">
+              <div class="t">Riprendere il corso di inglese</div>
+              <div class="row"><span class="temp cold"></span><span class="p">—</span><span class="tag">personale</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+
+<!-- pannello laterale del CRM (nel mockup resta visibile per farlo vedere) -->
+<aside class="panel" id="panel-crm" hidden>
+  <header>
+    <h2>Dettaglio</h2><div class="spacer" style="flex:1"></div>
+    <button class="btn">Esc</button>
+  </header>
+  <div class="body">
+    <div class="field"><div class="k">Titolo</div><div class="in">Richiamare per il rinnovo del contratto</div></div>
+    <div class="field"><div class="k">Nota</div><textarea class="in">Ha chiesto di risentirsi dopo Ferragosto. Vuole capire se il canone cambia con la sede nuova.</textarea></div>
+    <div class="field"><div class="k">Fascia</div>
+      <div class="chips"><span class="chip" aria-pressed="true">In ritardo</span><span class="chip">Oggi</span><span class="chip">Questa settimana</span><span class="chip">Più avanti</span></div>
+    </div>
+    <div class="field"><div class="k">Temperatura</div>
+      <div class="chips"><span class="chip" aria-pressed="true">Caldo</span><span class="chip">Tiepido</span><span class="chip">Freddo</span></div>
+    </div>
+    <div class="field"><div class="k">Persona</div><div class="in">Beatrice</div></div>
+    <div class="field"><div class="k">Tag</div><div class="chips"><span class="chip" aria-pressed="true">contratti</span><span class="chip">+</span></div></div>
+  </div>
+  <div class="foot">
+    <button class="btn ok">Completa</button>
+    <div style="flex:1"></div>
+    <button class="btn danger">Elimina</button>
+  </div>
+</aside>
+
+<!-- ============ FINANZE ============ -->
+<div class="screen" id="screen-finanze">
+<div class="grid">
+
+  <section class="card col-5" id="card-fin-netto">
+    <header><h2>Patrimonio netto</h2><div class="spacer"></div><span class="hint">istantanea di oggi</span></header>
+    <div class="body">
+      <div class="bigfig">248.310 €</div>
+      <div class="deltas" style="margin-top:16px">
+        <div><span class="k">Oggi</span><span class="v pos">+180</span></div>
+        <div><span class="k">30 giorni</span><span class="v pos">+3.140</span></div>
+        <div><span class="k">1 anno</span><span class="v pos">+28.900</span></div>
+      </div>
+      <div class="note">Il foglio "Conti 2024" sembra già incluso nel totale del riepilogo: non l'ho sommato due volte.</div>
+    </div>
+    <div class="foot">
+      <button class="btn primary"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg> Aggiorna dal foglio</button>
+      <span>aggiornato alle 09:41</span>
+    </div>
+  </section>
+
+  <section class="card col-7" id="card-fin-categorie">
+    <header><h2>Dove sono i soldi</h2></header>
+    <div class="body">
+      <table class="tbl">
+        <thead><tr><th>Voce</th><th>Tipo</th><th class="r">Valore</th><th class="r">30 giorni</th></tr></thead>
+        <tbody>
+          <tr><td>Conto corrente</td><td>Liquidità</td><td class="mono r">38.200 €</td><td class="mono r pos">+1.100</td></tr>
+          <tr><td>Conto deposito</td><td>Liquidità</td><td class="mono r">23.200 €</td><td class="mono r">0</td></tr>
+          <tr><td>Fondi indice</td><td>Investito</td><td class="mono r">164.500 €</td><td class="mono r pos">+2.240</td></tr>
+          <tr><td>Fondo pensione</td><td>Investito</td><td class="mono r">64.200 €</td><td class="mono r pos">+380</td></tr>
+          <tr><td>Mutuo casa</td><td>Debito</td><td class="mono r neg">-39.400 €</td><td class="mono r pos">+520</td></tr>
+          <tr><td>Finanziamento auto</td><td>Debito</td><td class="mono r neg">-2.390 €</td><td class="mono r pos">+190</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card col-12" id="card-fin-storico">
+    <header><h2>Storico mensile</h2><div class="spacer"></div><span class="hint">costruito dalle istantanee</span></header>
+    <div class="body">
+      <table class="tbl">
+        <thead><tr><th>Mese</th><th class="r">Liquidità</th><th class="r">Investito</th><th class="r">Passività</th><th class="r">Netto</th><th class="r">Variazione</th></tr></thead>
+        <tbody>
+          <tr><td>Agosto 2026</td><td class="mono r">61.400</td><td class="mono r">228.700</td><td class="mono r">-41.790</td><td class="mono r">248.310</td><td class="mono r pos">+3.140</td></tr>
+          <tr><td>Luglio 2026</td><td class="mono r">59.900</td><td class="mono r">227.100</td><td class="mono r">-41.830</td><td class="mono r">245.170</td><td class="mono r pos">+2.010</td></tr>
+          <tr><td>Giugno 2026</td><td class="mono r">62.300</td><td class="mono r">223.000</td><td class="mono r">-42.140</td><td class="mono r">243.160</td><td class="mono r neg">-980</td></tr>
+          <tr><td>Maggio 2026</td><td class="mono r">64.100</td><td class="mono r">222.400</td><td class="mono r">-42.360</td><td class="mono r">244.140</td><td class="mono r pos">+4.320</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ============ REVIEW ============ -->
+<div class="screen" id="screen-review">
+<div class="grid">
+
+  <section class="card col-12" id="card-review-stat">
+    <header><h2>La settimana che si chiude</h2><div class="spacer"></div><span class="hint">8 – 14 agosto</span></header>
+    <div class="body">
+      <div class="rstat">
+        <div class="b"><div class="k">Chiusi</div><div class="v pos">14</div><div class="s">tre in più della scorsa</div></div>
+        <div class="b"><div class="k">Slittati</div><div class="v due">6</div><div class="s">due per la terza volta</div></div>
+        <div class="b"><div class="k">Abitudini</div><div class="v">78%</div><div class="s">media della settimana</div></div>
+        <div class="b"><div class="k">Netto</div><div class="v pos">+780</div><div class="s">rispetto a lunedì</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card col-4" id="card-review-chiusi">
+    <header><h2>Cosa è andato</h2></header>
+    <div class="body">
+      <ul class="rlist">
+        <li><span class="temp" style="background:var(--ok)"></span> Listino 2027 chiuso <span class="p">Beatrice</span></li>
+        <li><span class="temp" style="background:var(--ok)"></span> Formazione venditori fatta <span class="p">—</span></li>
+        <li><span class="temp" style="background:var(--ok)"></span> Preventivo assicurativo firmato <span class="p">Studio</span></li>
+        <li><span class="temp" style="background:var(--ok)"></span> Ferie prenotate <span class="p">Sara</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card col-4" id="card-review-slittati">
+    <header><h2>Cosa è slittato</h2></header>
+    <div class="body">
+      <ul class="rlist">
+        <li><span class="temp hot"></span> Firma del contratto quadro <span class="p">3ª settimana</span></li>
+        <li><span class="temp hot"></span> Preventivo delle tre sedi <span class="p">2ª settimana</span></li>
+        <li><span class="temp warm"></span> Costi fissi da rivedere <span class="p">2ª settimana</span></li>
+        <li><span class="temp cold"></span> Gestionale nuovo da valutare <span class="p">1ª settimana</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card col-4" id="card-review-persone">
+    <header><h2>Chi non senti da troppo</h2></header>
+    <div class="body">
+      <ul class="rlist">
+        <li><span class="temp cold"></span> Giulia <span class="p">41 giorni</span></li>
+        <li><span class="temp cold"></span> Studio commercialista <span class="p">28 giorni</span></li>
+        <li><span class="temp warm"></span> Andrea <span class="p">22 giorni</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card col-12" id="card-review-prossima">
+    <header><h2>Le tre della prossima</h2></header>
+    <div class="body">
+      <ul class="prio">
+        <li><span class="r">1</span><span class="t">Chiudere la firma del contratto quadro: è fermo da tre settimane ed è il pezzo che blocca il resto.</span></li>
+        <li><span class="r">2</span><span class="t">Mandare il preventivo delle tre sedi entro martedì, prima che diventi la quarta settimana.</span></li>
+        <li><span class="r">3</span><span class="t">Un'ora sui costi fissi: è l'unico obiettivo del mese che non si è mosso di una riga.</span></li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ============ BARRA DI CATTURA ============ -->
+<div class="capture" id="capture-bar">
+  <div class="answer" id="capture-answer" hidden>
+    Su Marco ti eri detto due cose: che voleva capire i costi della sede nuova prima di firmare, e che preferisce essere richiamato di mattina.
+    <div class="src">Da: cattura del 2 agosto, cattura del 9 agosto</div>
+  </div>
+  <div class="wrap">
+    <button class="mic" id="mic" title="Parla">
+      <svg class="icon" style="width:18px;height:18px" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+    </button>
+    <input id="capture-input" placeholder="Di' una cosa, o fai una domanda…">
+    <span class="state" id="capture-state">pronto</span>
+    <button class="send" title="Invia">
+      <svg class="icon" style="width:17px;height:17px" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// Mockup: solo cambio schermata e orologio. Nessuna logica vera.
+const nav = document.getElementById('nav');
+nav.addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  [...nav.children].forEach(x => x.setAttribute('aria-current', x === b));
+  document.querySelectorAll('.screen').forEach(s =>
+    s.dataset.active = (s.id === 'screen-' + b.dataset.screen));
+  document.getElementById('panel-crm').hidden = b.dataset.screen !== 'crm';
+});
+function tick(){
+  const d = new Date();
+  const hh = String(d.getHours()).padStart(2,'0'), mm = String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('topclock').textContent = hh+':'+mm;
+  document.getElementById('bigclock').textContent = hh+':'+mm;
+  document.getElementById('bigdate').textContent =
+    d.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+tick(); setInterval(tick, 1000);
+document.getElementById('mic').addEventListener('click', e => {
+  const b = e.currentTarget;
+  const on = b.dataset.listening === 'true';
+  b.dataset.listening = String(!on);
+  document.getElementById('capture-state').textContent = on ? 'pronto' : 'ascolto…';
+});
+</script>
+</body>
+</html>

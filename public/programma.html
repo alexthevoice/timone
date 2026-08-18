@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>90 KG Challenge</title>
+<style>
+  @page { size: A4; margin: 10mm 12mm 8mm 12mm; }
+
+  :root{
+    --ink:#15181C;
+    --soft:#5C636E;
+    --line:#D5D9DF;
+    --hair:#E8EBEF;
+    --fill:#F4F6F8;
+    --accent:#C2410C;
+    --accent-soft:#FBEDE6;
+    --water:#0E6B7A;
+    --water-soft:#E7F2F4;
+    --int:#5B3E9B;
+    --int-soft:#EFEAF7;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  body{
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:var(--ink);
+    font-size:8.4pt;
+    line-height:1.38;
+  }
+
+  .sheet{ page-break-after:always; }
+  .sheet:last-child{ page-break-after:auto; }
+
+  /* ---------- intestazione ---------- */
+  .top{ display:flex; align-items:flex-end; justify-content:space-between;
+        border-bottom:1.6pt solid var(--ink); padding-bottom:2.2mm; }
+  .top h1{ font-size:25pt; letter-spacing:-0.6pt; line-height:0.92; font-weight:800; }
+  .top h1 em{ font-style:normal; color:var(--accent); }
+  .top .right{ text-align:right; }
+  .top .tag{ display:inline-block; background:var(--accent); color:#fff; font-size:6.6pt;
+             font-weight:800; letter-spacing:1pt; text-transform:uppercase;
+             padding:1mm 2.2mm; border-radius:1mm; }
+  .top .sub{ font-size:7.6pt; color:var(--soft); margin-top:1.6mm; line-height:1.5; }
+  .top .sub b{ color:var(--ink); }
+
+  h2{ font-size:8.4pt; letter-spacing:1.2pt; text-transform:uppercase; font-weight:800;
+      margin:3.4mm 0 1.9mm; padding-bottom:1mm; border-bottom:0.8pt solid var(--ink); }
+  h2 span{ float:right; letter-spacing:0; text-transform:none; font-weight:500;
+           color:var(--soft); font-size:7.4pt; }
+
+  /* ---------- le tre modalità ---------- */
+  .modi{ display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; }
+  .modo{ border:0.7pt solid var(--line); border-top:2.2pt solid var(--ink); padding:2mm 2.6mm; }
+  .modo.cli{ border-top-color:var(--accent); }
+  .modo.eme{ border-top-color:#B01717; }
+  .modo .n{ font-size:10pt; font-weight:800; letter-spacing:-0.2pt; }
+  .modo.cli .n{ color:var(--accent); }
+  .modo.eme .n{ color:#B01717; }
+  .modo .q{ font-size:6.4pt; letter-spacing:0.9pt; text-transform:uppercase;
+            color:var(--soft); margin-bottom:0.8mm; }
+  .modo .d{ font-size:7.6pt; color:var(--soft); line-height:1.4; margin-top:1.2mm; }
+  .modo .d b{ color:var(--ink); }
+
+  .rule{ margin-top:3mm; background:var(--accent-soft); border-left:2.2pt solid var(--accent);
+         padding:2.2mm 3mm; font-size:8.2pt; }
+  .rule b{ color:var(--accent); }
+
+  /* ---------- tabella di conversione ---------- */
+  .conv{ width:100%; border-collapse:collapse; }
+  .conv th{ font-size:6.4pt; letter-spacing:0.9pt; text-transform:uppercase; color:var(--soft);
+            text-align:left; padding:0 2.4mm 1.4mm; font-weight:600; }
+  .conv td{ padding:1.35mm 2.4mm; border-top:0.5pt solid var(--hair); vertical-align:top; font-size:7.8pt; }
+  .conv tr td:first-child{ font-weight:700; white-space:nowrap; }
+  .conv tr td:nth-child(2), .conv tr td:nth-child(3){ color:var(--soft); }
+  .conv tr td:nth-child(2) b, .conv tr td:nth-child(3) b{ color:var(--ink); font-weight:600; }
+  .conv .key{ display:inline-block; width:2.4mm; height:2.4mm; border-radius:0.6mm;
+              border:0.5pt solid var(--line); margin-right:1.6mm; vertical-align:-0.2mm; }
+
+  /* ---------- esercizi ---------- */
+  .ex{ display:grid; grid-template-columns:1fr 1fr; gap:0 6mm; }
+  .ex .item{ display:flex; gap:2.6mm; padding:1.35mm 0; border-bottom:0.5pt solid var(--hair); }
+  .ex .item:nth-last-child(-n+2){ border-bottom:0; }
+  .ex .tag{ flex:0 0 11mm; font-size:6.2pt; font-weight:800; letter-spacing:0.5pt;
+            color:var(--accent); background:var(--accent-soft); border-radius:1mm;
+            text-align:center; padding:0.8mm 0; height:fit-content; }
+  .ex .nm{ font-weight:700; font-size:8pt; }
+  .ex .nm i{ font-style:normal; color:var(--soft); font-weight:500; }
+  .ex .ds{ color:var(--soft); font-size:7.4pt; line-height:1.32; }
+
+  .circ{ border:0.7pt solid var(--line); padding:2.2mm 2.8mm; }
+  .chain{ display:flex; align-items:center; flex-wrap:wrap; gap:1.4mm; }
+  .chain b{ background:var(--ink); color:#fff; border-radius:1mm; padding:1.1mm 2.2mm;
+            font-size:7.5pt; font-weight:700; }
+  .chain span{ color:var(--line); font-weight:700; }
+  .circ .note{ margin-top:1.7mm; color:var(--soft); font-size:7.5pt; }
+  .circ .note b{ color:var(--ink); }
+
+  .duo{ display:grid; grid-template-columns:1.1fr 1fr; gap:6mm; }
+  .pace{ width:100%; border-collapse:collapse; }
+  .pace td{ padding:1.4mm 0; border-bottom:0.5pt solid var(--hair); vertical-align:top; }
+  .pace tr:last-child td{ border-bottom:0; }
+  .pace .lbl{ font-weight:700; width:23mm; }
+  .pace .val{ color:var(--soft); }
+  .pace .val b{ color:var(--ink); font-weight:700; }
+
+  .pool{ background:var(--water-soft); border-left:2.2pt solid var(--water); padding:2.4mm 3mm; height:100%; }
+  .pool .h{ font-weight:800; color:var(--water); font-size:7.6pt; letter-spacing:0.6pt;
+            text-transform:uppercase; margin-bottom:1.2mm; }
+  .pool p{ font-size:7.5pt; color:var(--soft); line-height:1.4; }
+  .pool p b{ color:var(--ink); }
+  .pool p + p{ margin-top:1.2mm; }
+
+  .stop{ margin-top:2.6mm; border:0.7pt solid var(--line); padding:2mm 2.8mm;
+         font-size:7.4pt; color:var(--soft); }
+  .stop b{ color:var(--ink); }
+
+  /* ---------- calendario ---------- */
+  .guida{ display:flex; gap:4mm; flex-wrap:wrap; align-items:center; margin:2.4mm 0 2.2mm;
+          font-size:6.9pt; color:var(--soft); }
+  .guida .k{ display:inline-block; width:2.6mm; height:2.6mm; border-radius:0.6mm;
+             border:0.5pt solid var(--line); margin-right:1.4mm; vertical-align:-0.3mm; }
+  .guida b{ color:var(--ink); }
+
+  .wk{ margin-bottom:1.5mm; }
+  .wkbar{ display:flex; align-items:center; gap:2mm; background:var(--fill);
+          border:0.6pt solid var(--line); border-bottom:0; padding:0.8mm 2mm; }
+  .wkbar .n{ font-size:6.9pt; font-weight:800; letter-spacing:0.6pt; color:var(--accent); }
+  .wkbar .t{ font-size:6.9pt; font-weight:700; letter-spacing:0.5pt; text-transform:uppercase; }
+  .wkbar .g{ flex:1; }
+  .wkbar .tg{ font-size:6.3pt; color:var(--soft); }
+  .wkbar .tg b{ color:var(--ink); }
+  .wkbar .w{ font-size:6.3pt; color:var(--soft); }
+
+  .days{ display:grid; grid-template-columns:repeat(7,1fr); border:0.6pt solid var(--line); }
+  .day{ border-right:0.5pt solid var(--hair); padding:1mm 1.3mm 1.3mm; min-height:12.2mm; }
+  .day:last-child{ border-right:0; }
+  .day .hd{ display:flex; align-items:center; gap:1.2mm; margin-bottom:0.7mm; }
+  .day .box{ width:2.5mm; height:2.5mm; border:0.7pt solid var(--soft); border-radius:0.4mm; flex:none; }
+  .day .num{ font-size:6.5pt; font-weight:800; color:var(--soft); }
+  .day .mo{ margin-left:auto; font-size:5.6pt; letter-spacing:0.6pt; color:#A2A9B2; font-weight:700; }
+  .day .w{ font-size:6.6pt; line-height:1.26; }
+  .day .w b{ font-weight:700; }
+  .day .w em{ font-style:normal; color:var(--soft); }
+  .day.c{ background:#fff; }
+  .day.k{ background:var(--accent-soft); }
+  .day.i{ background:var(--int-soft); }
+  .day.p{ background:var(--water-soft); }
+  .day.r{ background:var(--fill); }
+  .day.r .w{ font-weight:800; letter-spacing:0.3pt; color:var(--soft); }
+
+  .foot{ margin-top:2.4mm; padding-top:2mm; border-top:0.8pt solid var(--ink);
+         font-size:6.8pt; color:var(--soft); line-height:1.45; }
+  .foot b{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ===================== FRONTE ===================== -->
+<section class="sheet">
+
+  <div class="top">
+    <h1>90 KG<br><em>CHALLENGE</em></h1>
+    <div class="right">
+      <span class="tag">Versione flessibile</span>
+      <div class="sub">
+        <b>100 → 90 kg</b> · 187 cm · 84 giorni<br>
+        Zero esercizi a terra · tapis fino a 6 km/h
+      </div>
+    </div>
+  </div>
+
+  <h2>Ogni giorno scegli una modalità <span>tre versioni della stessa giornata, non tre programmi</span></h2>
+  <div class="modi">
+    <div class="modo std">
+      <div class="q">Giornata normale</div>
+      <div class="n">STANDARD 60'</div>
+      <div class="d">Fai quello che c'è scritto nel calendario, per intero.</div>
+    </div>
+    <div class="modo cli">
+      <div class="q">Parti presto o torni tardi</div>
+      <div class="n">CLIENTE 40'</div>
+      <div class="d">Versione corta, meglio <b>al mattino prima di uscire</b> che alle nove di sera con la testa altrove.</div>
+    </div>
+    <div class="modo eme">
+      <div class="q">Giornata ingestibile</div>
+      <div class="n">EMERGENZA 20'</div>
+      <div class="d">Venti minuti e basta. <b>Il giorno conta lo stesso</b>, e non si recupera la sera tardi.</div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <b>La regola che tiene in piedi tutto:</b> se non ci stanno 60', fai 40'. Se non ci stanno 40', fai 20'.
+    Quello che salti non si recupera il giorno dopo, e una seduta ridotta non è un fallimento: è il programma che sta funzionando come deve.
+  </div>
+
+  <h2>Come si accorcia la giornata <span>nel calendario c'è la versione standard</span></h2>
+  <table class="conv">
+    <tr>
+      <th style="width:32mm">Tipo di giornata</th>
+      <th style="width:57mm">Cliente 40'</th>
+      <th>Emergenza 20'</th>
+    </tr>
+    <tr>
+      <td><span class="key" style="background:#fff"></span>Camminata</td>
+      <td>WP <b>40'</b> sostenuto</td>
+      <td>WP <b>20'</b> sostenuto (5,5-6 km/h)</td>
+    </tr>
+    <tr>
+      <td><span class="key" style="background:var(--accent-soft)"></span>Con circuito</td>
+      <td>WP <b>25'</b> sostenuto + <b>circuito ×2</b></td>
+      <td>WP <b>20'</b> sostenuto (5,5-6 km/h)</td>
+    </tr>
+    <tr>
+      <td><span class="key" style="background:var(--int-soft)"></span>A intervalli</td>
+      <td>Intervalli <b>40'</b></td>
+      <td>WP <b>20'</b>: 5' a 5,3 + 10' a 6 + 5' a 5,3</td>
+    </tr>
+    <tr>
+      <td><span class="key" style="background:var(--water-soft)"></span>Con piscina</td>
+      <td>WP <b>40'</b> sostenuto, piscina facoltativa</td>
+      <td>WP <b>20'</b> sostenuto</td>
+    </tr>
+    <tr>
+      <td><span class="key" style="background:var(--fill)"></span>Riposo</td>
+      <td>Riposo, in tutte e tre le modalità</td>
+      <td>Riposo</td>
+    </tr>
+  </table>
+
+  <h2>I sette esercizi <span>tutti in piedi, nessuno a terra</span></h2>
+  <div class="ex">
+    <div class="item"><div class="tag">SQ</div><div>
+      <div class="nm">Squat alla sedia <i>· 10 volte</i></div>
+      <div class="ds">Siediti quasi sulla sedia e torna in piedi. Non serve scendere di più.</div></div></div>
+    <div class="item"><div class="tag">PU</div><div>
+      <div class="nm">Push-up al muro <i>· 10 volte</i></div>
+      <div class="ds">Mani al muro all'altezza del petto: piega i gomiti portando il petto verso il muro, poi spingi.</div></div></div>
+    <div class="item"><div class="tag">AF</div><div>
+      <div class="nm">Affondo indietro assistito <i>· 8 per gamba</i></div>
+      <div class="ds">Una mano in appoggio, una gamba indietro, piega poco e risali. Se le ginocchia protestano, saltalo.</div></div></div>
+    <div class="item"><div class="tag">CR</div><div>
+      <div class="nm">Calf raise <i>· 15 volte</i></div>
+      <div class="ds">Sali sulle punte, resta un secondo, scendi lentamente.</div></div></div>
+    <div class="item"><div class="tag">MG</div><div>
+      <div class="nm">Marcia a ginocchia alte <i>· 30 secondi</i></div>
+      <div class="ds">Marcia sul posto, ginocchia alte e braccia attive.</div></div></div>
+    <div class="item"><div class="tag">PF</div><div>
+      <div class="nm">Pugni frontali <i>· 30 secondi</i></div>
+      <div class="ds">Alterna destro e sinistro davanti a te, senza bloccare i gomiti.</div></div></div>
+    <div class="item"><div class="tag">SL</div><div>
+      <div class="nm">Step laterale <i>· 30 secondi</i></div>
+      <div class="ds">Passo a destra e riunisci, passo a sinistra e riunisci. Ritmo continuo.</div></div></div>
+    <div class="item"><div class="tag">REC</div><div>
+      <div class="nm">Recupero <i>· 60-90 secondi</i></div>
+      <div class="ds">Fra un giro e l'altro cammina piano. Riparti quando il fiato è tornato.</div></div></div>
+  </div>
+
+  <h2>Il circuito <span>C×2, C×3, C×4 dicono quanti giri</span></h2>
+  <div class="circ">
+    <div class="chain">
+      <b>10 SQ</b><span>›</span><b>10 PU</b><span>›</span><b>8+8 AF</b><span>›</span><b>15 CR</b><span>›</span>
+      <b>30" MG</b><span>›</span><b>30" PF</b><span>›</span><b>30" SL</b><span>›</span><b>REC 60-90"</b>
+    </div>
+    <div class="note">In modalità <b>Cliente 40'</b> il circuito resta ma sempre a <b>due giri</b>, qualunque numero ci sia sul calendario.</div>
+  </div>
+
+  <h2>Andature sul tapis <span>WP = walking pad</span></h2>
+  <div class="duo">
+    <table class="pace">
+      <tr><td class="lbl">Tranquillo</td><td class="val"><b>5 - 5,3 km/h</b> · respiri e parli senza fatica</td></tr>
+      <tr><td class="lbl">Sostenuto</td><td class="val"><b>5,5 - 5,7 km/h</b> · il passo di quando sei in ritardo</td></tr>
+      <tr><td class="lbl">Veloce</td><td class="val"><b>6 km/h</b> · il tetto, non si va oltre</td></tr>
+      <tr><td class="lbl">Intervalli</td><td class="val">Breve riscaldamento, poi alterna <b>5' a 6</b> e <b>3' a 5-5,3</b>. Negli ultimi minuti rallenta. Non devi correre.</td></tr>
+    </table>
+    <div class="pool">
+      <div class="h">In piscina</div>
+      <p><b>È un bonus, finché c'è.</b> Se salta non si recupera e non toglie niente al programma.</p>
+      <p>5' di camminata tranquilla, poi ripeti: <b>2'</b> camminata o corsa sul posto, <b>2'</b> avanti e indietro, <b>1'</b> jumping jack, <b>1'</b> ginocchia alternate, <b>1'</b> calci indietro, <b>1'</b> recupero camminando.</p>
+    </div>
+  </div>
+
+  <div class="stop">
+    <b>Quando ti fermi.</b> Dolore vero a schiena, ginocchia, caviglie o altro: interrompi quell'esercizio, non tutta la seduta.
+    Se il dolore torna nei giorni dopo o compaiono sintomi insoliti, sospendi e senti un medico.
+    <b>I target di peso sono indicativi:</b> il risultato dipende soprattutto da come mangi.
+  </div>
+
+</section>
+
+<!-- ===================== RETRO ===================== -->
+<section class="sheet">
+
+  <div class="top">
+    <h1 style="font-size:18pt">84 GIORNI</h1>
+    <div class="right">
+      <div class="sub" style="margin-top:0">
+        Spunta il giorno e <b>cerchia la modalità</b> che hai usato<br>
+        Quello che leggi qui sotto è la versione <b>standard da 60'</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="guida">
+    <span><span class="k" style="background:#fff"></span>camminata</span>
+    <span><span class="k" style="background:var(--accent-soft)"></span>con circuito</span>
+    <span><span class="k" style="background:var(--int-soft)"></span>a intervalli</span>
+    <span><span class="k" style="background:var(--water-soft)"></span>con piscina</span>
+    <span><span class="k" style="background:var(--fill)"></span>riposo</span>
+    <span style="margin-left:auto"><b>S</b> standard 60' · <b>C</b> cliente 40' · <b>E</b> emergenza 20'</span>
+  </div>
+
+  <div id="cal"></div>
+
+  <div class="foot">
+    <b>WP</b> tapis, minuti e velocità · <b>INT</b> intervalli · <b>C×n</b> circuito, n giri · <b>SQ</b> squat · <b>PU</b> push-up · <b>CR</b> calf raise<br>
+    Non inseguire il numero di un singolo giorno: il peso oscilla per acqua, sale e pasti, guarda l'andamento. A fine settimana guarda anche quante C e quante E hai cerchiato: se sono la maggioranza il problema non è la tua volontà, è l'orario in cui provi ad allenarti.
+  </div>
+
+</section>
+
+<script>
+// tipo: c camminata · k circuito · i intervalli · p piscina · r riposo
+const W = [
+ ["PARTENZA","", [["c","WP 40'<br><em>+ forza leggera</em>"],["c","WP 50'"],["k","WP 35'<br><b>C×2</b>"],["c","WP 55'"],["k","WP 35'<br><b>C×2</b>"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["COSTANZA","", [["k","WP 45'<br><b>C×2</b>"],["c","WP 60'"],["k","WP 35'<br><b>C×3</b>"],["c","WP 55'"],["k","WP 40'<br><b>C×3</b>"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["INTERVALLI","", [["i","<b>INT 50'</b>"],["k","WP 35'<br><b>C×3</b>"],["c","WP 60'"],["k","<b>INT 40'</b> + <b>C×2</b>"],["c","WP 55'"],["p","WP 40'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["CHECKPOINT","96,5 - 98 kg", [["i","<b>INT 50'</b>"],["k","WP 35'<br><b>C×3</b>"],["c","WP 60'"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO<br><em>peso + girovita</em>"]]],
+ ["BRUCIA-GRASSI","", [["c","WP 60'"],["k","WP 35'<br><b>C×3</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["PROGRESSIONE","95 - 96 kg", [["i","<b>INT 60'</b>"],["k","WP 35'<br><b>C×4</b>"],["c","WP 60'"],["k","WP 40'<br><b>C×4</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO<br><em>peso</em>"]]],
+ ["VOLUME","", [["c","WP 60'"],["k","WP 35'<br><b>C×4</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["CHECKPOINT","93 - 94,5 kg", [["c","WP 60'"],["k","WP 35'<br><b>C×4</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO<br><em>peso + girovita</em>"]]],
+ ["RETTILINEO FINALE","", [["c","WP 60'"],["k","WP 35'<br><b>C×4</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["CONTINUITÀ","91,5 - 93 kg", [["c","WP 60'"],["k","WP 35'<br><b>C×4</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO<br><em>peso</em>"]]],
+ ["OBIETTIVO IN VISTA","", [["c","WP 60'"],["k","WP 35'<br><b>C×4</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina</b>"],["r","RIPOSO"]]],
+ ["ULTIMA SETTIMANA","90 kg", [["c","WP 60'"],["k","WP 35'<br><b>C×4</b>"],["i","<b>INT 60'</b>"],["k","WP 40'<br><b>C×3</b>"],["c","WP 60'"],["p","WP 45'<br><b>+ piscina tranquilla</b>"],["r","RIPOSO<br><em>peso finale + girovita</em>"]]],
+];
+
+let html = "", giorno = 0;
+W.forEach((w, i) => {
+  const [nome, target, giorni] = w;
+  html += '<div class="wk"><div class="wkbar">' +
+    '<span class="n">SETTIMANA ' + (i+1) + '</span>' +
+    '<span class="t">' + nome + '</span>' +
+    '<span class="g"></span>' +
+    (target ? '<span class="tg">target <b>' + target + '</b></span>' : '') +
+    '<span class="w">peso fine settimana ________ kg</span>' +
+    '</div><div class="days">';
+  giorni.forEach(([tipo, testo]) => {
+    giorno++;
+    html += '<div class="day ' + tipo + '">' +
+      '<div class="hd"><span class="box"></span><span class="num">' + giorno + '</span>' +
+      (tipo === "r" ? '' : '<span class="mo">S C E</span>') + '</div>' +
+      '<div class="w">' + testo + '</div></div>';
+  });
+  html += '</div></div>';
+});
+document.getElementById("cal").innerHTML = html;
+</script>
+
+</body>
+</html>
