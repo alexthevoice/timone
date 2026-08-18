@@ -23,19 +23,19 @@ export default function ErroreGlobale({ error, reset }) {
           display: "grid",
           placeItems: "center",
           padding: 24,
-          background: "#0c0c0e",
-          color: "#f4f4f5",
+          background: "#0A1B33",
+          color: "#F1F5F9",
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
         }}
       >
         <div style={{ maxWidth: 460, width: "100%" }}>
-          <div style={{ fontSize: 12, letterSpacing: ".08em", textTransform: "uppercase", color: "#71717a" }}>
+          <div style={{ fontSize: 12, letterSpacing: ".08em", textTransform: "uppercase", color: "#7E93AC" }}>
             {NOME} {VERSIONE}
           </div>
           <h1 style={{ fontSize: 22, margin: "10px 0 8px", fontWeight: 600 }}>
             Si è inceppato qualcosa
           </h1>
-          <p style={{ fontSize: 14, lineHeight: 1.5, color: "#a1a1aa", margin: "0 0 18px" }}>
+          <p style={{ fontSize: 14, lineHeight: 1.5, color: "#B6C4D6", margin: "0 0 18px" }}>
             {vecchia
               ? "Questa pagina era aperta da prima dell'ultimo rilascio e sta cercando pezzi che non ci sono più. Ricaricando torna tutto."
               : "Il guasto è nel browser, non nei tuoi dati: niente di quello che hai segnato è andato perso."}
@@ -46,7 +46,7 @@ export default function ErroreGlobale({ error, reset }) {
               onClick={() => reset?.()}
               style={{
                 padding: "9px 14px", borderRadius: 9, border: "none", cursor: "pointer",
-                background: "#5b8dff", color: "#fff", fontSize: 13.5, fontWeight: 500,
+                background: "#E8A838", color: "#0D2240", fontSize: 13.5, fontWeight: 500,
               }}
             >
               Riprova
@@ -54,8 +54,8 @@ export default function ErroreGlobale({ error, reset }) {
             <button
               onClick={() => window.location.reload()}
               style={{
-                padding: "9px 14px", borderRadius: 9, border: "1px solid #33333a", cursor: "pointer",
-                background: "#1a1a1e", color: "#f4f4f5", fontSize: 13.5, fontWeight: 500,
+                padding: "9px 14px", borderRadius: 9, border: "1px solid #3A5A82", cursor: "pointer",
+                background: "#1B3B63", color: "#F1F5F9", fontSize: 13.5, fontWeight: 500,
               }}
             >
               Ricarica la pagina
@@ -65,8 +65,8 @@ export default function ErroreGlobale({ error, reset }) {
           {error?.message && (
             <pre
               style={{
-                marginTop: 18, padding: 12, borderRadius: 9, background: "#141417",
-                border: "1px solid #26262b", color: "#a1a1aa", fontSize: 12,
+                marginTop: 18, padding: 12, borderRadius: 9, background: "#133256",
+                border: "1px solid #29486E", color: "#B6C4D6", fontSize: 12,
                 whiteSpace: "pre-wrap", overflowWrap: "anywhere",
               }}
             >
