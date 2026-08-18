@@ -25,7 +25,9 @@ if (!BASE || !CHIAVE) {
 
 const { creaTabelle } = await import("../lib/tabelle.mjs");
 
-const { create, saltate } = await creaTabelle(BASE, CHIAVE);
+const { create, saltate, campiAggiunti } = await creaTabelle(BASE, CHIAVE);
 for (const nome of saltate) console.log(`· ${nome}: c'è già, la salto.`);
+for (const [nome, campi] of Object.entries(campiAggiunti ?? {}))
+  console.log(`+ ${nome}: c'era già, aggiunti i campi ${campi.join(", ")}.`);
 for (const nome of create) console.log(`✓ ${nome}: creata.`);
 console.log("\nFatto. Ora la dashboard può leggere e scrivere.");
