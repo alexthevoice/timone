@@ -116,9 +116,10 @@ export default function Calendario({ cal }) {
           </div>
         ) : cal.configurato === false ? (
           <div className="note" style={{ marginTop: 0 }}>
-            Nessuna agenda collegata. Serve <b>GOOGLE_CALENDAR_ICAL_URLS</b>, con una riga per
-            agenda: <code>Lavoro = https://…/basic.ics</code>. L&apos;indirizzo è quello segreto in
-            formato iCal nelle impostazioni del calendario, non quello pubblico.
+            Il tuo calendario non è ancora collegato. Si fa una volta sola, in
+            cinque minuti: la guida ti ci porta per mano nella tappa del
+            calendario (serve l&apos;indirizzo segreto del tuo Google Calendar).
+            Se hai un dubbio, chiedi alla tua AI di seguirla con te.
           </div>
         ) : (
           <>

@@ -116,9 +116,11 @@ export default function Salute({ salute, oggiIso, modifica, ricarica }) {
 
         {!arrivato && storia.length === 0 ? (
           <div className="note" style={{ marginTop: 0 }}>
-            Non è ancora arrivato niente dall&apos;orologio. Su iPhone serve un comando in
-            <b> Comandi Rapidi</b> che, una volta al giorno, legge Salute e manda i numeri a
-            <code> /api/salute</code>. Le istruzioni passo passo sono in <code>README.md</code>.
+            Non è ancora arrivato niente dall&apos;orologio. È il tuo iPhone che, una
+            volta al giorno, manda qui i numeri di Salute: si prepara una volta
+            sola con <b>Comandi Rapidi</b>, e la guida ha la tappa che ti porta
+            fino in fondo, passo per passo. Intanto il peso lo puoi già segnare
+            qui sopra, a mano.
           </div>
         ) : (
           <>
