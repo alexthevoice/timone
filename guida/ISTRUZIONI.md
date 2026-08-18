@@ -4,8 +4,8 @@ Una pagina sola, leggila prima di cominciare.
 
 ## Cosa stai per costruire
 
-Una dashboard tutta tua, su un tuo indirizzo internet, protetta da una tua
-password. Dentro: i cicli aperti divisi per settore, le cose da fare, il calendario,
+Il tuo sistema operativo personale: una dashboard tutta tua, su un tuo
+indirizzo internet, protetta da una tua password. Dentro: i cicli aperti divisi per settore, le cose da fare, il calendario,
 le abitudini, gli obiettivi, l'allenamento, i dati del tuo orologio, e una barra a cui puoi scrivere o
 dettare qualsiasi cosa: lei capisce di cosa si tratta e la archivia nel posto
 giusto. Nessuno la vede tranne te. I dati stanno in un tuo archivio, e puoi
@@ -14,17 +14,20 @@ scaricarli tutti con un pulsante.
 ## Come funziona questa guida
 
 Non la segui da solo: la segui con la tua intelligenza artificiale, quella
-che usi già (Claude, ChatGPT, Gemini o un'altra). Apri una nuova chat o un
-progetto, carica dentro i file di questa cartella, poi apri il file
-`PROMPT-AVVIO.md`, copia il testo che contiene e incollaglielo. Da lì in poi
-ti guida lei, un passo alla volta, e a ogni passo controlla insieme a te che
-tutto abbia funzionato prima di andare avanti. Preferisci fare da solo? La
-guida vera è `PERCORSO.md`: tappe scritte per persone, si segue anche senza
-nessuna AI.
+che usi già (Claude, ChatGPT, Gemini o un'altra). Bastano due gesti: carica
+TUTTI i file di questa cartella in una nuova chat o in un progetto della tua
+AI, e scrivile:
+
+**Inizia la creazione del mio sistema operativo personale.**
+
+Da lì in poi ti guida lei, un passo alla volta, e a ogni passo controlla
+insieme a te che tutto abbia funzionato prima di andare avanti. Preferisci
+fare da solo? La guida vera è `PERCORSO.md`: tappe scritte per persone, si
+segue anche senza nessuna AI.
 
 In PROMPT-PRONTI.md trovi anche i prompt per farti scrivere dalla tua AI
 i contenuti su misura: il programma di allenamento, le abitudini, gli
-obiettivi. Funzionano con qualsiasi assistente, non solo con Claude.
+obiettivi. Funzionano con qualsiasi assistente.
 
 ## Cosa ti serve
 
@@ -63,6 +66,6 @@ Non serve saper programmare. Serve saper copiare e incollare.
 
 ## Se ti incagli
 
-Dillo a Claude, con parole tue e, se puoi, con quello che vedi sullo schermo
+Dillo alla tua AI, con parole tue e, se puoi, con quello che vedi sullo schermo
 (un messaggio di errore, una schermata). La guida è fatta per riprendersi:
 ogni passo ha la sua verifica, e si può sempre ripetere senza fare danni.

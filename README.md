@@ -27,10 +27,11 @@ finestra.
 
 Scarica la guida:
 [**timone-guida.zip**](https://github.com/alexthevoice/timone/releases/latest/download/timone-guida.zip),
-aprila, e comincia da ISTRUZIONI (una pagina). Da lì la tua AI (Claude,
-ChatGPT, Gemini, quella che usi) ti porta tappa per tappa dalla base vuota
-alla dashboard sul tuo indirizzo; oppure segui PERCORSO.md da solo, è
-scritto per persone. La stessa cartella vive anche qui nel repo:
+aprila, e comincia da ISTRUZIONI (una pagina). Poi carica tutti i file
+nella tua AI (Claude, ChatGPT, Gemini, quella che usi) e scrivile: "Inizia
+la creazione del mio sistema operativo personale." Ti porta lei, tappa per
+tappa, dalla base vuota alla dashboard sul tuo indirizzo; oppure segui
+PERCORSO.md da solo, è scritto per persone. La stessa cartella vive anche qui nel repo:
 [guida/](./guida).
 
 Per copiare il codice: **Use this template** qui sopra, oppure

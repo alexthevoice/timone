@@ -1,10 +1,10 @@
 # Le regole di casa
 
 Sono le regole con cui questo codice è scritto, ognuna con la sua ragione.
-Servono a te e al tuo Claude quando, a dashboard funzionante, comincerete a
+Servono a te e alla tua AI quando, a dashboard funzionante, comincerete a
 modificarla: rispettandole, le modifiche non rompono le promesse su cui
-tutto si regge. È lo stesso contenuto del file CLAUDE.md del repository,
-che Claude Code legge da solo.
+tutto si regge. È lo stesso contenuto del file CLAUDE.md del repository
+(gli strumenti di programmazione lo leggono da soli).
 
 Dashboard personale a un utente solo: task, calendario, abitudini, obiettivi,
 allenamento e una memoria che risponde citando le fonti. Il database è

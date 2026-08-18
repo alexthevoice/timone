@@ -65,7 +65,7 @@ uno che inizia per `pat`.
    - `AIRTABLE_API_KEY`: il token `pat...` della tappa 2
    - `AIRTABLE_BASE_ID`: il codice `app...` della tappa 2
    - `AUTH_SECRET`: una stringa casuale lunga almeno 40 caratteri
-     (fattela generare da Claude o da un generatore di password)
+     (fattela generare dalla tua AI o da un generatore di password)
    - `API_SECRET`: un'altra stringa casuale, diversa
    - `CRON_SECRET`: un'altra ancora
    - `DASHBOARD_PASSWORD`: la password con cui entrerai TU. Una frase
@@ -200,7 +200,7 @@ d'estate, le 6 d'inverno.
 
 ## Tappa 11: falla tua
 
-Da qui in poi lavori direttamente col tuo Claude, senza percorso:
+Da qui in poi lavori direttamente con la tua AI, senza percorso:
 
 - Il **Profilo**: apri la tabella Profilo su Airtable e crea la prima
   riga: nome, città, le abitudini che vuoi tracciare (il formato è
@@ -215,6 +215,6 @@ Da qui in poi lavori direttamente col tuo Claude, senza percorso:
   qualche domanda, ti restituisce un blocco, e tu lo incolli nella
   casella della schermata Allenamento. Stesso giro per le **abitudini**
   (la casella è in Config) e per formulare **obiettivi** e **settori**.
-- Tutto il resto: il codice è tuo. Il tuo Claude lo può modificare, e
+- Tutto il resto: il codice è tuo. La tua AI lo può modificare, e
   REGOLE-DI-CASA.md gli spiega come farlo senza rompere le promesse su
   cui la dashboard si regge.
