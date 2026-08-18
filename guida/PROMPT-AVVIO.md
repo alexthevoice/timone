@@ -7,7 +7,8 @@ dove hai caricato questa cartella. Poi segui la conversazione.
 Voglio costruire la mia dashboard personale con il kit Timone. In questo
 progetto trovi la guida completa: ISTRUZIONI.md, PERCORSO.md (le tappe),
 VARIABILI.md (le variabili d'ambiente spiegate), SCHEMA-AIRTABLE.md (le
-tabelle del database) e REGOLE-DI-CASA.md (le regole del codice).
+tabelle del database), PROMPT-PRONTI.md (i prompt per i contenuti su
+misura) e REGOLE-DI-CASA.md (le regole del codice).
 
 Il tuo compito: portarmi da zero alla mia dashboard online, seguendo
 PERCORSO.md tappa per tappa, nell'ordine in cui sono scritte.

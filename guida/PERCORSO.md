@@ -8,18 +8,19 @@ pezzi facoltativi, ognuno indipendente dagli altri.
 
 ## Tappa 0: gli account
 
-Servono quattro account gratuiti. Per ognuno: crearlo se manca, e riuscire
-a entrare.
+Servono tre account, tutti gratuiti e senza carta. Per ognuno: crearlo
+se manca, e riuscire a entrare.
 
 1. **GitHub** (github.com): qui vivrà la tua copia del codice.
 2. **Vercel** (vercel.com): qui il codice va online. Registrati scegliendo
    "Continue with GitHub": i due account si collegano da soli.
 3. **Airtable** (airtable.com): qui vivranno i tuoi dati.
-4. **Anthropic** (console.anthropic.com): il cervello. Serve una carta:
-   vai su Billing, carica un minimo (5 dollari bastano per mesi) e imposta
-   un limite di spesa mensile.
 
-**Verifica:** riesci a entrare in tutti e quattro.
+Il "cervello" (l'intelligenza che smista e risponde) NON serve per
+partire: la dashboard funziona anche senza, e si aggiunge alla tappa 6,
+solo se e quando vorrai.
+
+**Verifica:** riesci a entrare in tutti e tre.
 
 ---
 
@@ -55,17 +56,7 @@ uno che inizia per `pat`.
 
 ---
 
-## Tappa 3: la chiave del cervello
-
-1. Su console.anthropic.com → **API Keys** → **Create Key**. Copiala
-   (inizia per `sk-ant-`): anche questa si vede una volta sola.
-2. Controlla di avere il limite di spesa mensile impostato (tappa 0).
-
-**Verifica:** hai la chiave `sk-ant-...` copiata da parte.
-
----
-
-## Tappa 4: online
+## Tappa 3: online
 
 1. Su vercel.com: **Add New...** → **Project** → importa il repository
    `timone` creato alla tappa 1.
@@ -73,8 +64,6 @@ uno che inizia per `pat`.
    queste (i dettagli di ognuna sono in VARIABILI.md):
    - `AIRTABLE_API_KEY`: il token `pat...` della tappa 2
    - `AIRTABLE_BASE_ID`: il codice `app...` della tappa 2
-   - `ANTHROPIC_API_KEY`: la chiave `sk-ant-...` della tappa 3
-   - `ANTHROPIC_MODEL_SMISTAMENTO`: `claude-haiku-4-5`
    - `AUTH_SECRET`: una stringa casuale lunga almeno 40 caratteri
      (fattela generare da Claude o da un generatore di password)
    - `API_SECRET`: un'altra stringa casuale, diversa
@@ -90,13 +79,16 @@ uno che inizia per `pat`.
    (Settings → Environment Variables) e rifai il deploy
    (Deployments → i tre puntini sull'ultimo → Redeploy).
 
-**Verifica:** aprendo il tuo indirizzo vedi la schermata di accesso col
-nome che hai scelto, e con la tua password entri. La dashboard mostrerà
-errori sulle schede: è giusto così, le tabelle non esistono ancora.
+**Verifica:** aprendo il tuo indirizzo vedi la schermata di accesso, e
+con la tua password entri. Al primo ingresso ti accoglie la
+configurazione iniziale: il nome della tua dashboard, quali moduli
+accendere, i colori. Tre passi e sei dentro (e da Config si rifà quando
+vuoi). La dashboard mostrerà errori sulle schede: è giusto così, le
+tabelle non esistono ancora.
 
 ---
 
-## Tappa 5: le tabelle
+## Tappa 4: le tabelle
 
 1. Nel browser, già entrato nella dashboard, visita
    `https://IL-TUO-INDIRIZZO/api/admin/tabelle`.
@@ -111,20 +103,40 @@ quando vuoi (tasto destro sul suo nome → Delete table).
 
 ---
 
-## Tappa 6: la prima cattura
+## Tappa 5: la prima cattura
 
 1. Nella barra in fondo alla dashboard scrivi: `chiamare Giulia domani
    per il preventivo` e premi Invio.
 2. Guarda la scheda "Ultime cose buttate dentro" e le cose da fare.
 
-**Verifica:** la frase è comparsa fra le catture con una destinazione, e
-fra le cose da fare c'è "Giulia" collegata. La tua dashboard funziona:
-da qui in poi sono rifiniture.
+Senza il cervello (che arriva alla prossima tappa) a smistare sono le
+regole a parole chiave: più grezze, ma la nota non si perde mai.
 
-Nota: al primo ingresso, prima della barra, ti accoglie la
-configurazione iniziale: il nome della tua dashboard, quali moduli
-accendere, i colori. Tre passi e si entra; si può rifare quando vuoi
-da Config.
+**Verifica:** la frase è comparsa fra le catture con una destinazione, e
+fra le cose da fare c'è "Giulia" collegata. La tua dashboard funziona
+già, gratis: da qui in poi sono potenziamenti.
+
+---
+
+## Tappa 6 (facoltativa, consigliata): il cervello
+
+Fin qui non hai speso niente. Questa tappa accende l'intelligenza: le
+note smistate capendole davvero, le domande alla barra, il briefing del
+mattino. Costa qualche euro al mese con un uso normale, e col tetto di
+spesa non può scapparti di mano.
+
+1. Crea l'account su console.anthropic.com. Su **Billing** carica un
+   minimo (5 dollari bastano per mesi) e **imposta un limite di spesa
+   mensile**.
+2. **API Keys** → **Create Key**. Copiala (inizia per `sk-ant-`): si
+   vede una volta sola.
+3. Su Vercel aggiungi le variabili `ANTHROPIC_API_KEY` (la chiave) e
+   `ANTHROPIC_MODEL_SMISTAMENTO` con valore `claude-haiku-4-5`, e rifai
+   il deploy.
+
+**Verifica:** scrivi nella barra una nota ambigua, tipo `pensare a un
+regalo per mamma entro sabato`: nelle catture arriva con la via
+"modello" e una scadenza vera.
 
 ---
 
@@ -176,8 +188,9 @@ Quell'indirizzo è segreto davvero: chiunque lo abbia legge il calendario.
 
 ## Tappa 10 (facoltativa): il briefing del mattino
 
-Non c'è niente da fare: se Telegram (tappa 7) è attivo e `CRON_SECRET`
-esiste, ogni mattina il bot ti manda il riassunto della giornata. L'orario
+Non c'è niente da fare: se il cervello (tappa 6) e Telegram (tappa 7)
+sono attivi e `CRON_SECRET` esiste, ogni mattina il bot ti manda il
+riassunto della giornata. L'orario
 del cron è in `vercel.json` ed è in UTC: le 5 UTC sono le 7 italiane
 d'estate, le 6 d'inverno.
 
@@ -197,9 +210,11 @@ Da qui in poi lavori direttamente col tuo Claude, senza percorso:
 - La pagina **Config** (dal menu in alto a sinistra): schema colori e
   tema, moduli da accendere o spegnere, l'ordine di menu e Home, nome e
   cognome, la password nuova, e il wizard da rifare quando vuoi.
-- Un **programma di allenamento**: chiedi al tuo Claude di prepararne uno
-  nel formato di `/api/allenamento/importa` (il formato è documentato nel
-  file di quella rotta) e di caricartelo.
+- Un **programma di allenamento**: in PROMPT-PRONTI.md c'è il prompt da
+  dare alla tua AI (quella che usi già: Claude, ChatGPT, Gemini). Ti fa
+  qualche domanda, ti restituisce un blocco, e tu lo incolli nella
+  casella della schermata Allenamento. Stesso giro per le **abitudini**
+  (la casella è in Config) e per formulare **obiettivi** e **settori**.
 - Tutto il resto: il codice è tuo. Il tuo Claude lo può modificare, e
   REGOLE-DI-CASA.md gli spiega come farlo senza rompere le promesse su
   cui la dashboard si regge.

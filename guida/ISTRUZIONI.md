@@ -19,23 +19,29 @@ apri Claude Code), carica dentro i file di questa cartella, poi apri il file
 poi ti guida lui, un passo alla volta, e a ogni passo controlla insieme a te
 che tutto abbia funzionato prima di andare avanti.
 
+In PROMPT-PRONTI.md trovi anche i prompt per farti scrivere dalla tua AI
+i contenuti su misura: il programma di allenamento, le abitudini, gli
+obiettivi. Funzionano con qualsiasi assistente, non solo con Claude.
+
 ## Cosa ti serve
 
 - Un computer con un browser e circa un'ora di tempo.
 - Un iPhone se vuoi i dati dell'orologio (facoltativo, 10 minuti in più).
-- Quattro account gratuiti da creare strada facendo: GitHub (dove sta il
-  codice), Vercel (dove va online), Airtable (dove stanno i dati),
-  Anthropic (il cervello che smista e risponde).
-- Una carta per l'account Anthropic: si paga solo quello che si usa, e la
-  guida ti fa impostare un tetto di spesa.
+- Tre account gratuiti da creare strada facendo: GitHub (dove sta il
+  codice), Vercel (dove va online), Airtable (dove stanno i dati).
+  Niente carta per partire.
+- Quando vorrai darle il cervello (le note capite davvero, le domande,
+  il briefing), un account Anthropic con una carta e un tetto di spesa:
+  è una tappa facoltativa, dopo che la dashboard è già tua.
 
 Non serve saper programmare. Serve saper copiare e incollare.
 
 ## Quanto costa al mese
 
-- Sito e database: zero. I piani gratuiti bastano.
-- Il cervello (Anthropic): qualche euro al mese con un uso normale, tipo 2-5.
-  Con il tetto di spesa impostato non può scapparti di mano.
+- Per partire: zero. Sito, database e dashboard girano sui piani gratuiti,
+  e senza cervello le note le smistano le regole a parole chiave.
+- Il cervello (Anthropic), quando lo accendi: qualche euro al mese con un
+  uso normale, tipo 2-5. Con il tetto di spesa non può scapparti di mano.
 - Le note vocali su Telegram (facoltative): centesimi, con un account OpenAI.
 - Dopo circa un anno di uso quotidiano l'archivio gratuito di Airtable si
   riempie (mille righe): a quel punto o fai pulizia o passi al piano a

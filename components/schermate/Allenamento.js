@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Griglia from "@/components/Griglia";
 import { Spunta } from "@/components/Icone";
+import { leggiBlocco } from "@/lib/incolla";
 import { postJson } from "@/lib/useDati";
 import { CONVERSIONI, MODALITA, REGOLA_ANTI_SALTO, versioni } from "@/lib/modalita";
 
@@ -56,11 +57,15 @@ export default function Allenamento({ attiva, dati, modifica, ricarica }) {
   if (!dati || !allenamento) {
     return (
       <Griglia id="allenamento" attiva={attiva}>
-        <section className="card col-12">
-          <div className="body" style={{ padding: 16, color: "var(--text-faint)" }}>
-            {dati ? "Nessun programma caricato." : "Sto leggendo i tuoi dati…"}
-          </div>
-        </section>
+        {dati ? (
+          <CaricaProgramma ricarica={ricarica} />
+        ) : (
+          <section className="card col-12">
+            <div className="body" style={{ padding: 16, color: "var(--text-faint)" }}>
+              Sto leggendo i tuoi dati…
+            </div>
+          </section>
+        )}
       </Griglia>
     );
   }
@@ -378,5 +383,84 @@ function Dettaglio({ r, oggiIso, onSegna, onChiudi }) {
         )}
       </div>
     </aside>
+  );
+}
+
+/* ------------------------------------------------- il primo caricamento */
+
+/**
+ * Il programma non è nel codice: lo scrivi tu, o meglio te lo fai scrivere
+ * dalla tua intelligenza artificiale, quella che usi già. Nella guida c'è il
+ * prompt pronto: glielo incolli, rispondi alle sue domande, e lei ti
+ * restituisce il blocco. Il blocco si incolla qui, si sceglie il giorno di
+ * partenza, e la parete si riempie. Se il blocco è storto, l'errore dice
+ * cosa non va: si rincolla all'AI e si fa correggere.
+ */
+function CaricaProgramma({ ricarica }) {
+  const [testo, setTesto] = useState("");
+  const [inizio, setInizio] = useState("");
+  const [esito, setEsito] = useState(null);
+  const [caricando, setCaricando] = useState(false);
+
+  const carica = async () => {
+    setEsito(null);
+    const { valore, errore } = leggiBlocco(testo);
+    if (errore) return setEsito({ ok: false, testo: errore });
+    // Si accetta sia il blocco nudo {nome, giorni} sia quello vestito
+    // {programma: {...}}: le AI producono l'uno o l'altro, pazienza.
+    const programma = valore?.programma ?? valore;
+    if (!programma?.nome || !Array.isArray(programma?.giorni) || !programma.giorni.length) {
+      return setEsito({ ok: false, testo: 'Il blocco deve avere "nome" e un elenco "giorni" non vuoto. Rincolla questo messaggio alla tua AI.' });
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(inizio)) {
+      return setEsito({ ok: false, testo: "Scegli il giorno di partenza." });
+    }
+    setCaricando(true);
+    try {
+      const r = await postJson("/api/allenamento/importa", { inizio, programma });
+      setEsito({ ok: true, testo: `Caricato: ${r.programma}, dal ${r.dal} al ${r.al}.` });
+      await ricarica();
+    } catch (e) {
+      setEsito({ ok: false, testo: e.message });
+      setCaricando(false);
+    }
+  };
+
+  return (
+    <section className="card col-12">
+      <header>
+        <h2>Nessun programma caricato</h2>
+        <div className="spacer" />
+        <span className="hint">il prompt per fartelo scrivere dalla tua AI è nella guida</span>
+      </header>
+      <div className="body">
+        <div className="modulo-config" style={{ maxWidth: 640 }}>
+          <div style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.55 }}>
+            Chiedi alla tua intelligenza artificiale (quella che usi già: Claude,
+            ChatGPT, Gemini) di prepararti un programma col prompt pronto della
+            guida. Copia il blocco che ti risponde e incollalo qui sotto.
+          </div>
+          <textarea
+            value={testo}
+            onChange={(e) => setTesto(e.target.value)}
+            placeholder={'{ "nome": "Il mio programma", "giorni": [ ... ] }'}
+            rows={8}
+            style={{
+              width: "100%", padding: "10px 12px", borderRadius: 8, fontSize: 12.5,
+              fontFamily: "var(--font-mono)", background: "var(--surface-2)",
+              border: "1px solid var(--border)", outline: "none", color: "var(--text)", resize: "vertical",
+            }}
+          />
+          <label>
+            Il giorno 1 del programma
+            <input type="date" value={inizio} onChange={(e) => setInizio(e.target.value)} />
+          </label>
+          <button className="btn-salva" disabled={caricando} onClick={carica}>
+            {caricando ? "Carico…" : "Carica il programma"}
+          </button>
+          {esito && <span className={`esito ${esito.ok ? "ok" : "male"}`}>{esito.testo}</span>}
+        </div>
+      </div>
+    </section>
   );
 }

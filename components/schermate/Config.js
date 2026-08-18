@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Griglia from "@/components/Griglia";
+import { leggiBlocco } from "@/lib/incolla";
 import { MODULI, SCHEDE_HOME, SCHEMI } from "@/lib/moduli";
 import { postJson } from "@/lib/useDati";
 import { STORICO, VERSIONE } from "@/lib/versione";
@@ -28,6 +29,7 @@ export default function Config({ attiva, dati, interfaccia, ricarica }) {
       <OrdineMenu interfaccia={interfaccia} salva={salvaInterfaccia} />
       <OrdineHome interfaccia={interfaccia} salva={salvaInterfaccia} />
       <Utente profilo={dati?.profilo} ricarica={ricarica} />
+      <Abitudini profilo={dati?.profilo} ricarica={ricarica} />
       <CambioPassword />
       <Versione ricarica={ricarica} />
     </Griglia>
@@ -248,6 +250,81 @@ function Utente({ profilo, ricarica }) {
           </label>
           <button className="btn-salva" onClick={salva}>
             Salva
+          </button>
+          {esito && <span className={`esito ${esito.ok ? "ok" : "male"}`}>{esito.testo}</span>}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------- abitudini */
+
+/**
+ * Le abitudini da tracciare: fin qui si cambiavano solo a mano su Airtable.
+ * Il blocco lo scrive l'AI dell'utente col prompt pronto della guida, e si
+ * incolla qui: la scheda in Home si aggiorna al salvataggio.
+ */
+function Abitudini({ profilo, ricarica }) {
+  const [testo, setTesto] = useState("");
+  const [esito, setEsito] = useState(null);
+
+  const attuali = profilo?.abitudini ?? [];
+
+  const salva = async () => {
+    setEsito(null);
+    const { valore, errore } = leggiBlocco(testo);
+    if (errore) return setEsito({ ok: false, testo: errore });
+    const lista = Array.isArray(valore) ? valore : valore?.abitudini;
+    if (!Array.isArray(lista) || !lista.length) {
+      return setEsito({ ok: false, testo: 'Il blocco deve essere un elenco di abitudini. Rincolla questo messaggio alla tua AI.' });
+    }
+    const storte = lista.filter(
+      (a) => !a?.id || !a?.nome || !["spunta", "contatore"].includes(a?.tipo) || (a.tipo === "contatore" && !(Number(a.obiettivo) > 0))
+    );
+    if (storte.length) {
+      return setEsito({
+        ok: false,
+        testo: `Ogni abitudine vuole id, nome e tipo ("spunta" o "contatore", il contatore con un obiettivo maggiore di zero). Non tornano: ${storte.map((a) => a?.nome ?? a?.id ?? "?").join(", ")}.`,
+      });
+    }
+    try {
+      await postJson("/api/profilo", { abitudini: lista }, "PATCH");
+      setTesto("");
+      setEsito({ ok: true, testo: "Salvate: le trovi nella scheda Abitudini in Home." });
+      await ricarica?.();
+    } catch (e) {
+      setEsito({ ok: false, testo: e.message });
+    }
+  };
+
+  return (
+    <section className="card col-6">
+      <header>
+        <h2>Abitudini</h2>
+        <div className="spacer" />
+        <span className="hint">il prompt per fartele scrivere dalla tua AI è nella guida</span>
+      </header>
+      <div className="body">
+        <div className="modulo-config">
+          <div style={{ fontSize: 13, color: "var(--text-dim)" }}>
+            {attuali.length
+              ? `Adesso tracci: ${attuali.map((a) => a.nome).join(", ")}.`
+              : "Non stai ancora tracciando nessuna abitudine."}
+          </div>
+          <textarea
+            value={testo}
+            onChange={(e) => setTesto(e.target.value)}
+            placeholder={'[ { "id": "acqua", "nome": "Acqua", "tipo": "contatore", "obiettivo": 8 } ]'}
+            rows={5}
+            style={{
+              width: "100%", padding: "10px 12px", borderRadius: 8, fontSize: 12.5,
+              fontFamily: "var(--font-mono)", background: "var(--surface-2)",
+              border: "1px solid var(--border)", outline: "none", color: "var(--text)", resize: "vertical",
+            }}
+          />
+          <button className="btn-salva" onClick={salva}>
+            Sostituisci le abitudini
           </button>
           {esito && <span className={`esito ${esito.ok ? "ok" : "male"}`}>{esito.testo}</span>}
         </div>
