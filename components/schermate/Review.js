@@ -167,7 +167,7 @@ export default function Review({ attiva }) {
           {r.inArrivo.length === 0 ? (
             <Vuoto testo="Non c'è niente con una scadenza nei prossimi giorni. O sei avanti, o le scadenze non le hai messe: la seconda è più probabile della prima." />
           ) : (
-            <ul className="prio">
+            <ul className="prossime">
               {r.inArrivo.map((t, i) => (
                 <li key={t.id}>
                   <span className="r">{i + 1}</span>
