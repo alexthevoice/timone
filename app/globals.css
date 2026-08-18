@@ -1545,7 +1545,9 @@ body:has(.gate){padding-bottom:0}
 .topbar .meta .num{color:#DCE6F2}
 .topbar .pill{background:rgba(255,255,255,.10);color:#DCE6F2}
 .topbar .pill.live{background:rgba(45,138,78,.30);color:#8FE0AE}
-.topbar .versione{color:var(--ambra)}
+/* La targhetta sta sulla barra, che è navy in tutti e due i temi: lo
+   sfondo non può venire dal tema, o col chiaro diventa latte sull'ambra. */
+.topbar .versione{color:var(--ambra);background:rgba(255,255,255,.12)}
 
 .panino{display:flex;flex-direction:column;justify-content:center;gap:4px;width:34px;height:34px;padding:8px;border-radius:8px;flex:0 0 auto}
 .panino:hover{background:rgba(255,255,255,.10)}
