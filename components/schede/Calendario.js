@@ -1,5 +1,7 @@
 "use client";
 
+import PromptPronto from "@/components/PromptPronto";
+import { PROMPT_CALENDARIO } from "@/lib/prompts";
 import { useState } from "react";
 import { Calendario as IconaCalendario, Destra, Sinistra } from "@/components/Icone";
 import { settimanaDi } from "@/lib/data";
@@ -117,9 +119,13 @@ export default function Calendario({ cal }) {
         ) : cal.configurato === false ? (
           <div className="note" style={{ marginTop: 0 }}>
             Il tuo calendario non è ancora collegato. Si fa una volta sola, in
-            cinque minuti: la guida ti ci porta per mano nella tappa del
-            calendario (serve l&apos;indirizzo segreto del tuo Google Calendar).
-            Se hai un dubbio, chiedi alla tua AI di seguirla con te.
+            cinque minuti, con l&apos;indirizzo segreto del tuo Google Calendar.
+            <div style={{ marginTop: 10 }}>
+              <PromptPronto
+                titolo="Fatti guidare dalla tua AI a collegarlo"
+                testo={PROMPT_CALENDARIO}
+              />
+            </div>
           </div>
         ) : (
           <>

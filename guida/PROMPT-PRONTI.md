@@ -5,6 +5,10 @@ te li fai scrivere dalla TUA intelligenza artificiale, quella che usi già.
 Claude, ChatGPT, Gemini o un'altra: non importa, il risultato è un blocco
 di testo da copiare e incollare.
 
+Li trovi anche direttamente DENTRO la dashboard: ogni modulo che ha
+bisogno di un contenuto o di una procedura mostra il suo prompt con il
+bottone "Copia". Questo file è la copia comoda da leggere tutta insieme.
+
 Il giro è sempre lo stesso:
 
 1. Copia il prompt qui sotto e incollalo alla tua AI.

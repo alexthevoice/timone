@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Griglia from "@/components/Griglia";
+import PromptPronto from "@/components/PromptPronto";
 import { leggiBlocco } from "@/lib/incolla";
+import { PROMPT_ABITUDINI } from "@/lib/prompts";
 import { MODULI, SCHEDE_HOME, SCHEMI } from "@/lib/moduli";
 import { postJson } from "@/lib/useDati";
 import { STORICO, VERSIONE } from "@/lib/versione";
@@ -303,7 +305,7 @@ function Abitudini({ profilo, ricarica }) {
       <header>
         <h2>Abitudini</h2>
         <div className="spacer" />
-        <span className="hint">il prompt per fartele scrivere dalla tua AI è nella guida</span>
+        <span className="hint">copia il prompt, falle scrivere il blocco, incollalo</span>
       </header>
       <div className="body">
         <div className="modulo-config">
@@ -312,6 +314,7 @@ function Abitudini({ profilo, ricarica }) {
               ? `Adesso tracci: ${attuali.map((a) => a.nome).join(", ")}.`
               : "Non stai ancora tracciando nessuna abitudine."}
           </div>
+          <PromptPronto titolo="Fatti scrivere le abitudini dalla tua AI" testo={PROMPT_ABITUDINI} />
           <textarea
             value={testo}
             onChange={(e) => setTesto(e.target.value)}

@@ -1786,3 +1786,21 @@ body:has(.gate){padding-bottom:0}
 .riordino .voce .n{flex:1}
 .riordino .voce button{padding:2px 7px;border-radius:6px;color:var(--text-faint);font-size:12px}
 .riordino .voce button:hover{background:var(--surface-3);color:var(--text)}
+
+/* ---- il prompt pronto, dentro i moduli ---- */
+.prompt-pronto{
+  border:1px dashed var(--border-strong);border-radius:10px;
+  padding:10px 12px;background:var(--surface-2);
+}
+.prompt-pronto .testa{display:flex;align-items:center;gap:8px}
+.prompt-pronto .tit{flex:1;font-size:12.5px;font-weight:600}
+.prompt-pronto .copia{
+  padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:600;
+  background:var(--ambra);color:var(--navy);
+}
+.prompt-pronto .sotto{font-size:11.5px;color:var(--text-faint);margin-top:4px}
+.prompt-pronto .testo{
+  margin-top:8px;padding:10px;border-radius:8px;font-size:11px;line-height:1.5;
+  font-family:var(--font-mono);background:var(--surface);border:1px solid var(--border);
+  white-space:pre-wrap;max-height:260px;overflow:auto;color:var(--text-dim);
+}

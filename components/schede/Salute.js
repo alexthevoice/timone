@@ -1,5 +1,8 @@
 "use client";
 
+
+import PromptPronto from "@/components/PromptPronto";
+import { promptSalute } from "@/lib/prompts";
 import { useEffect, useState } from "react";
 import { Battito, Passo } from "@/components/Icone";
 import { num, num1 } from "@/lib/numeri";
@@ -118,9 +121,14 @@ export default function Salute({ salute, oggiIso, modifica, ricarica }) {
           <div className="note" style={{ marginTop: 0 }}>
             Non è ancora arrivato niente dall&apos;orologio. È il tuo iPhone che, una
             volta al giorno, manda qui i numeri di Salute: si prepara una volta
-            sola con <b>Comandi Rapidi</b>, e la guida ha la tappa che ti porta
-            fino in fondo, passo per passo. Intanto il peso lo puoi già segnare
+            sola con <b>Comandi Rapidi</b>. Intanto il peso lo puoi già segnare
             qui sopra, a mano.
+            <div style={{ marginTop: 10 }}>
+              <PromptPronto
+                titolo="Fatti guidare dalla tua AI a collegare l&apos;orologio"
+                testo={promptSalute(typeof window === "undefined" ? "https://IL-TUO-INDIRIZZO" : window.location.origin)}
+              />
+            </div>
           </div>
         ) : (
           <>

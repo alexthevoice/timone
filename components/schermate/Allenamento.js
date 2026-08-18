@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Griglia from "@/components/Griglia";
 import { Spunta } from "@/components/Icone";
+import PromptPronto from "@/components/PromptPronto";
 import { leggiBlocco } from "@/lib/incolla";
+import { PROMPT_ALLENAMENTO } from "@/lib/prompts";
 import { postJson } from "@/lib/useDati";
 import { CONVERSIONI, MODALITA, REGOLA_ANTI_SALTO, versioni } from "@/lib/modalita";
 
@@ -431,14 +433,16 @@ function CaricaProgramma({ ricarica }) {
       <header>
         <h2>Nessun programma caricato</h2>
         <div className="spacer" />
-        <span className="hint">il prompt per fartelo scrivere dalla tua AI è nella guida</span>
+        <span className="hint">tre gesti: copia il prompt, falle scrivere il blocco, incollalo</span>
       </header>
       <div className="body">
         <div className="modulo-config" style={{ maxWidth: 640 }}>
+          <PromptPronto
+            titolo="1. Fatti scrivere il programma dalla tua AI"
+            testo={PROMPT_ALLENAMENTO}
+          />
           <div style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.55 }}>
-            Chiedi alla tua intelligenza artificiale (quella che usi già: Claude,
-            ChatGPT, Gemini) di prepararti un programma col prompt pronto della
-            guida. Copia il blocco che ti risponde e incollalo qui sotto.
+            2. Copia il blocco che l&apos;AI ti risponde e incollalo qui sotto.
           </div>
           <textarea
             value={testo}
