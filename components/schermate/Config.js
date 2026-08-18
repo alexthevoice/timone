@@ -79,14 +79,16 @@ function SceltaTema() {
 function Utente({ profilo, ricarica }) {
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
+  const [nomeSistema, setNomeSistema] = useState("");
   const [esito, setEsito] = useState(null);
 
   // I campi si riempiono quando il profilo arriva, ma senza calpestare
   // quello che stai scrivendo: solo finché sono ancora vuoti.
   useEffect(() => {
-    if (profilo && nome === "" && cognome === "") {
+    if (profilo && nome === "" && cognome === "" && nomeSistema === "") {
       setNome(profilo.nome ?? "");
       setCognome(profilo.cognome ?? "");
+      setNomeSistema(profilo.nomeSistema ?? "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profilo]);
@@ -94,7 +96,11 @@ function Utente({ profilo, ricarica }) {
   const salva = async () => {
     setEsito(null);
     try {
-      await postJson("/api/profilo", { nome: nome.trim(), cognome: cognome.trim() }, "PATCH");
+      await postJson(
+        "/api/profilo",
+        { nome: nome.trim(), cognome: cognome.trim(), nomeSistema: nomeSistema.trim() },
+        "PATCH"
+      );
       setEsito({ ok: true, testo: "Salvato." });
       await ricarica?.();
     } catch (e) {
@@ -118,6 +124,14 @@ function Utente({ profilo, ricarica }) {
           <label>
             Cognome
             <input value={cognome} onChange={(e) => setCognome(e.target.value)} />
+          </label>
+          <label>
+            Nome del sistema
+            <input
+              value={nomeSistema}
+              onChange={(e) => setNomeSistema(e.target.value)}
+              placeholder="vuoto = quello di partenza"
+            />
           </label>
           <button className="btn-salva" onClick={salva}>
             Salva

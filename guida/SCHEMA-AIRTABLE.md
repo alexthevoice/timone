@@ -17,6 +17,7 @@ Una riga sola: chi sei e le tue preferenze.
 |---|---|---|
 | Nome | testo | |
 | Cognome | testo | |
+| NomeSistema | testo | il nome della dashboard scelto da Config; vuoto = quello di partenza |
 | Ruolo | testo | |
 | Citta | testo | |
 | FocusDelGiorno | testo lungo | |

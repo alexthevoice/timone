@@ -26,7 +26,12 @@ export default function Pagina() {
 
   return (
     <>
-      <BarraSuperiore schermata={schermata} onSchermata={setSchermata} errore={errore} />
+      <BarraSuperiore
+        schermata={schermata}
+        onSchermata={setSchermata}
+        errore={errore}
+        nome={dati?.profilo?.nomeSistema || undefined}
+      />
       <Home
         attiva={schermata === "home"}
         dati={dati}

@@ -23,11 +23,17 @@ const SCHERMATE = [
   { id: "review", nome: "Review" },
 ];
 
-export default function BarraSuperiore({ schermata, onSchermata, errore }) {
+export default function BarraSuperiore({ schermata, onSchermata, errore, nome = NOME }) {
   // L'orologio parte solo sul browser: se lo disegnasse anche il server,
   // i due orari non coinciderebbero e React protesterebbe.
   const { ora } = useOrologio();
   const [aperto, setAperto] = useState(false);
+
+  // Il titolo della finestra segue il nome scelto: dal client, così non
+  // dipende da nessuna cache di metadata.
+  useEffect(() => {
+    if (nome) document.title = nome;
+  }, [nome]);
 
   // Escape chiude il menu, come qualsiasi altra cosa aperta.
   useEffect(() => {
@@ -59,7 +65,7 @@ export default function BarraSuperiore({ schermata, onSchermata, errore }) {
         </button>
 
         <div className="brand">
-          <span className="dot" /> {NOME}
+          <span className="dot" /> {nome}
           {attuale && attuale.id !== "home" ? <span className="dove"> · {attuale.nome}</span> : null}
         </div>
 
@@ -101,6 +107,12 @@ export default function BarraSuperiore({ schermata, onSchermata, errore }) {
           parte. Chiuso non si clicca (pointer-events) e non si vede. */}
       <div className="drawer-sfondo" data-aperto={aperto} onClick={() => setAperto(false)} />
       <nav className="drawer" data-aperto={aperto} aria-hidden={!aperto}>
+        {/* Il cassetto si presenta: il nome della casa in alto, poi la barra
+            che lo separa dalle stanze. */}
+        <div className="drawer-brand">
+          <span className="dot" /> {nome}
+        </div>
+        <div className="riga-divisoria" />
         {SCHERMATE.map((s) => (
           <button key={s.id} tabIndex={aperto ? 0 : -1} aria-current={schermata === s.id} onClick={() => vai(s.id)}>
             {s.nome}

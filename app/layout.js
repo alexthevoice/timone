@@ -12,10 +12,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: NOME,
-  description: "La dashboard che tiene insieme le mie cose",
-};
+/** Il titolo della finestra segue il nome scelto da Config, con la rete. */
+export async function generateMetadata() {
+  const { leggiProfilo } = await import("@/lib/store");
+  const nome = await leggiProfilo()
+    .then((p) => p.nomeSistema || NOME)
+    .catch(() => NOME);
+  return { title: nome };
+}
 
 export default function RootLayout({ children }) {
   return (
