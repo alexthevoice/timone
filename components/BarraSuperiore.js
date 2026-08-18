@@ -7,6 +7,7 @@ import { ULTIMA_MODIFICA, VERSIONE } from "@/lib/versione";
 /** La barra in cima: le schermate, e basta. */
 const SCHERMATE = [
   { id: "home", nome: "Home" },
+  { id: "cicli", nome: "Cicli" },
   { id: "quadranti", nome: "Quadranti" },
   { id: "allenamento", nome: "Allenamento" },
   { id: "crm", nome: "CRM" },

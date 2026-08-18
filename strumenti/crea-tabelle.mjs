@@ -1,5 +1,5 @@
 /**
- * Crea le dieci tabelle su una base Airtable vuota.
+ * Crea le undici tabelle su una base Airtable vuota.
  *
  * Si lancia una volta, all'inizio, contro una base appena creata:
  *

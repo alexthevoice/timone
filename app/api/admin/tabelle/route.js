@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { creaTabelle } from "@/lib/tabelle.mjs";
 
 export const dynamic = "force-dynamic";
-// Dieci tabelle sono undici chiamate ad Airtable in fila: meglio abbondare.
+// Undici tabelle sono dodici chiamate ad Airtable in fila: meglio abbondare.
 export const maxDuration = 60;
 
 /**
  * Crea le tabelle dal browser, per chi non ha un terminale.
  *
  * È il gemello cliccabile di strumenti/crea-tabelle.mjs: dopo il deploy e il
- * login si visita /api/admin/tabelle e le dieci tabelle compaiono sulla base.
+ * login si visita /api/admin/tabelle e le undici tabelle compaiono sulla base.
  * Idempotente come lo script: quelle che ci sono già si saltano, i dati non
  * si toccano mai, quindi rivisitarla per sbaglio non fa danni.
  *

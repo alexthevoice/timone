@@ -5,8 +5,8 @@ Una pagina sola, leggila prima di cominciare.
 ## Cosa stai per costruire
 
 Una dashboard tutta tua, su un tuo indirizzo internet, protetta da una tua
-password. Dentro: le cose da fare, il calendario, le abitudini, gli obiettivi,
-l'allenamento, i dati del tuo orologio, e una barra a cui puoi scrivere o
+password. Dentro: i cicli aperti divisi per settore, le cose da fare, il calendario,
+le abitudini, gli obiettivi, l'allenamento, i dati del tuo orologio, e una barra a cui puoi scrivere o
 dettare qualsiasi cosa: lei capisce di cosa si tratta e la archivia nel posto
 giusto. Nessuno la vede tranne te. I dati stanno in un tuo archivio, e puoi
 scaricarli tutti con un pulsante.

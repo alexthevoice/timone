@@ -160,7 +160,7 @@ Airtable, il modello è Claude, gira su Vercel. Il nome dell'app vive in
 
 ## Airtable, e come si creano le tabelle
 
-Le dieci tabelle si creano su una base vuota con:
+Le undici tabelle si creano su una base vuota con:
 
     node --env-file=.env.local strumenti/crea-tabelle.mjs
 

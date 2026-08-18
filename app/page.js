@@ -3,6 +3,7 @@
 import { useState } from "react";
 import BarraSuperiore from "@/components/BarraSuperiore";
 import BarraCattura from "@/components/BarraCattura";
+import Cicli from "@/components/schermate/Cicli";
 import Home from "@/components/schermate/Home";
 import Quadranti from "@/components/schermate/Quadranti";
 import SchermataAllenamento from "@/components/schermate/Allenamento";
@@ -32,6 +33,12 @@ export default function Pagina() {
         ricarica={ricarica}
         onApriTask={apriTask}
         onApriProgramma={() => setSchermata("allenamento")}
+      />
+      <Cicli
+        attiva={schermata === "cicli"}
+        dati={dati}
+        modifica={modifica}
+        ricarica={ricarica}
       />
       <SchermataAllenamento
         attiva={schermata === "allenamento"}

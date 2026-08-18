@@ -101,12 +101,12 @@ errori sulle schede: è giusto così, le tabelle non esistono ancora.
 1. Nel browser, già entrato nella dashboard, visita
    `https://IL-TUO-INDIRIZZO/api/admin/tabelle`.
 2. Aspetta qualche secondo: risponde una pagina di testo con l'elenco
-   `create: [...]` con dieci nomi.
+   `create: [...]` con undici nomi.
 3. Torna alla dashboard e ricarica.
 
 **Verifica:** le schede non mostrano più errori ma stati vuoti sensati
 ("Niente, per ora", "Nessun programma caricato"). Su Airtable la tua base
-ha dieci tabelle nuove. La tabellina vuota di partenza puoi cancellarla
+ha undici tabelle nuove. La tabellina vuota di partenza puoi cancellarla
 quando vuoi (tasto destro sul suo nome → Delete table).
 
 ---

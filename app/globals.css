@@ -383,6 +383,21 @@ ul{list-style:none}
 .tcard .row{display:flex;align-items:center;gap:7px;margin-top:7px}
 .tcard .p{font-size:11.5px;color:var(--text-dim)}
 .tag{font-size:10.5px;padding:1.5px 6px;border-radius:5px;background:var(--surface-3);color:var(--text-dim)}
+/* ---- cicli aperti: il kanban dei settori ---- */
+.kanban.cicli{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));align-items:start}
+.kanban.cicli .add input::placeholder{color:var(--text-faint)}
+.nuova-colonna{display:flex;align-items:center;gap:10px;margin-top:12px}
+.nuova-colonna input{
+  width:220px;padding:6px 10px;border-radius:7px;font-size:12.5px;
+  background:var(--surface-2);border:1px dashed var(--border);outline:none;color:inherit;
+}
+.nuova-colonna input:focus{border-color:var(--accent)}
+.promozione{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.promozione select,.promozione input{
+  padding:4px 6px;border-radius:7px;font-size:12px;
+  background:var(--surface-2);border:1px solid var(--border);outline:none;color:inherit;
+}
+
 .byperson{display:flex;flex-direction:column;gap:14px}
 .pgroup > h3{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px}
 .pgroup > h3 .org{font-weight:400;font-size:12px;color:var(--text-faint)}

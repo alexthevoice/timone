@@ -1,7 +1,7 @@
 # Timone
 
-Una dashboard personale a un utente solo: task, calendario, abitudini,
-obiettivi, allenamento e una memoria che risponde alle domande citando da
+Una dashboard personale a un utente solo: cicli aperti, task, calendario,
+abitudini, obiettivi, allenamento e una memoria che risponde alle domande citando da
 dove viene quello che dice.
 
 Le parli — a voce o scrivendo — e lei archivia da sola nel posto giusto.
@@ -35,7 +35,7 @@ Comincia da [guida/ISTRUZIONI.md](./guida/ISTRUZIONI.md).
 ```bash
 cp .env.local.example .env.local   # e riempi i valori, sono tutti spiegati lì
 npm install
-node --env-file=.env.local strumenti/crea-tabelle.mjs   # crea le 10 tabelle su una base Airtable vuota
+node --env-file=.env.local strumenti/crea-tabelle.mjs   # crea le 11 tabelle su una base Airtable vuota
 npm run dev
 ```
 

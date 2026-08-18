@@ -4,6 +4,7 @@ import { eFermo } from "@/lib/fermo";
 import {
   configurato,
   leggiCatture,
+  leggiCicli,
   leggiLog,
   leggiLogIntervallo,
   leggiFormazione,
@@ -37,7 +38,7 @@ export async function GET() {
   const giorno = oggi();
   const finestra = ultimiGiorni(30);
 
-  const [profilo, task, logOggi, log30, obiettivi, catture, allenamento, persone, formazione] =
+  const [profilo, task, logOggi, log30, obiettivi, catture, allenamento, persone, formazione, cicli] =
     await Promise.all([
     leggiProfilo(),
     leggiTask(),
@@ -61,6 +62,11 @@ export async function GET() {
       console.error("[dashboard] formazione non leggibile:", e.message);
       return [];
     }),
+    // Se la tabella dei cicli non c'è ancora, la Home vive lo stesso.
+    leggiCicli().catch((e) => {
+      console.error("[dashboard] cicli non leggibili:", e.message);
+      return [];
+    }),
   ]);
 
   return NextResponse.json({
@@ -68,6 +74,7 @@ export async function GET() {
     task,
     persone,
     formazione,
+    cicli,
     logOggi,
     obiettivi,
     catture,

@@ -1,6 +1,6 @@
 # Lo schema Airtable, tabella per tabella
 
-Le dieci tabelle che la dashboard si aspetta. Normalmente NON serve crearle
+Le undici tabelle che la dashboard si aspetta. Normalmente NON serve crearle
 a mano: le crea la rotta `/api/admin/tabelle` (tappa 5 del percorso) o lo
 script `strumenti/crea-tabelle.mjs`, che leggono queste stesse definizioni
 da `lib/tabelle.mjs`. Questo file serve da riferimento, e da rete di
@@ -52,6 +52,20 @@ Una riga sola: chi sei e le tue preferenze.
 | Allegati | allegati | |
 | CreatoIl | data e ora | |
 | CompletatoIl | data e ora | vuoto = aperto |
+
+## CicliAperti
+
+I pensieri parcheggiati per settore, prima che diventino impegni.
+
+| Campo | Tipo | Scelte |
+|---|---|---|
+| Titolo | testo | |
+| Nota | testo lungo | |
+| Settore | scelta singola | Amministrazione, Personale, IT, Vendite (se ne aggiungono scrivendole) |
+| Posizione | numero intero | |
+| CreatoIl | data e ora | |
+| PromossoIl | data e ora | vuoto = ancora aperto |
+| TaskId | testo | la riga Task nata dalla promozione |
 
 ## Catture
 

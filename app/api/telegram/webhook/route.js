@@ -9,7 +9,7 @@ import {
   rispondiA,
   scaricaFile,
 } from "@/lib/telegram";
-import { aggiornaTask, scriviCattura, scriviMemoria, segnaPeso } from "@/lib/store";
+import { aggiornaTask, creaCiclo, scriviCattura, scriviMemoria, segnaPeso } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -109,6 +109,21 @@ async function gestisciMessaggio(messaggio) {
     await rispondiA(
       chat,
       `Peso di oggi segnato: <b>${String(esito.peso).replace(".", ",")} kg</b>.`
+    );
+    return;
+  }
+
+  // "ciclo Vendite: richiamare la concessionaria" scarica a terra un pensiero
+  // senza passare dallo smistatore: niente urgenze, niente task, solo la
+  // colonna giusta del Kanban. Senza settore ("ciclo: ...") finisce in
+  // "Da smistare". Come "peso": un comando esplicito, non una destinazione.
+  const comandoCiclo = testo.match(/^ciclo(?:\s+([^:]{1,40}))?\s*:\s*(.+)$/is);
+  if (comandoCiclo) {
+    const settore = comandoCiclo[1]?.trim();
+    const creato = await creaCiclo({ titolo: comandoCiclo[2].trim(), settore });
+    await rispondiA(
+      chat,
+      `Ciclo aperto: <b>${scappa(creato.Titolo)}</b> · ${settore ? scappa(settore) : "da smistare"}`
     );
     return;
   }
