@@ -23,6 +23,13 @@ finestra.
 | Accesso | password singola e cookie firmato |
 | Dove gira | Vercel |
 
+## Se parti da zero
+
+Nella cartella [guida/](./guida) c'è il percorso completo per chi non ha mai
+messo online niente: si carica in un progetto Claude e da lì si viene guidati
+tappa per tappa, dalla base vuota alla dashboard sul proprio indirizzo.
+Comincia da [guida/ISTRUZIONI.md](./guida/ISTRUZIONI.md).
+
 ## Per farla partire
 
 ```bash

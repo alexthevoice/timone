@@ -1,3 +1,11 @@
+# Le variabili d'ambiente, spiegate
+
+Sono le stesse del file `.env.local.example` del repository. Ogni riga che
+inizia con `#` è una spiegazione; le altre sono le variabili da compilare.
+Su Vercel si inseriscono una per una (Settings, Environment Variables); in
+locale si copiano in un file chiamato `.env.local`.
+
+```
 # Timone - variabili d'ambiente
 #
 # Copia questo file in .env.local e riempi i valori.
@@ -75,3 +83,4 @@ CRON_SECRET=
 NEXT_PUBLIC_APP_URL=
 # Il fuso in cui vivi. Decide quando "oggi" diventa "ieri".
 USER_TIMEZONE=Europe/Rome
+```
