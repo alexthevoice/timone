@@ -261,7 +261,7 @@ export default function PannelloTask({
         <div className="field">
           <div className="k">Persone</div>
           <div className="chips">
-            {[...new Set([...(elemento.persone ?? []), ...persone.map((p) => p.nome)].filter(Boolean))]
+            {[...new Set([...(elemento.persone ?? []), ...persone.map((p) => p.nomeCompleto || p.nome)].filter(Boolean))]
               .sort((a, b) => a.localeCompare(b, "it"))
               .map(
               (nome) => {

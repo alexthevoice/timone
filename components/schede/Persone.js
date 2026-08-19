@@ -22,10 +22,10 @@ export default function Persone({ persone = [], oggiIso, ricarica }) {
   const [lavoro, setLavoro] = useState(null);
 
   const ordinate = [...persone]
-    .filter((p) => p.nome)
+    .filter((p) => p.nomeCompleto || p.nome)
     .map((p) => ({ ...p, giorni: giorniDaIso(p.ultimoContatto, oggiIso) }))
     .sort((a, b) => {
-      if (a.giorni === null && b.giorni === null) return a.nome.localeCompare(b.nome, "it");
+      if (a.giorni === null && b.giorni === null) return (a.nomeCompleto || a.nome).localeCompare(b.nomeCompleto || b.nome, "it");
       if (a.giorni === null) return -1;
       if (b.giorni === null) return 1;
       return b.giorni - a.giorni;
@@ -59,7 +59,7 @@ export default function Persone({ persone = [], oggiIso, ricarica }) {
           <div className="rubrica">
             {ordinate.map((p) => (
               <div className="riga" key={p.id}>
-                <span className="nome">{p.nome}</span>
+                <span className="nome">{p.nomeCompleto || p.nome}</span>
                 {p.organizzazione && <span className="org">{p.organizzazione}</span>}
                 <span className={`da num ${p.giorni === null || p.giorni > 60 ? "neg" : ""}`}>
                   {p.giorni === null ? "mai" : p.giorni === 0 ? "oggi" : `${p.giorni} g`}
