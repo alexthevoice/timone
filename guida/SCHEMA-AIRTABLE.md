@@ -35,8 +35,11 @@ Una riga sola: chi sei e le tue preferenze.
 | Campo | Tipo | Scelte |
 |---|---|---|
 | Nome | testo | |
+| Cognome | testo | |
 | Organizzazione | testo | |
 | Tipo | scelta singola | lavoro, cliente, fornitore, personale, altro |
+| Telefono | testo | |
+| Mail | testo | |
 | Note | testo lungo | |
 | UltimoContatto | data | |
 | CreatoIl | data e ora | |

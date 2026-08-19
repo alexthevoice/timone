@@ -1090,6 +1090,7 @@ body:has(.gate){padding-bottom:0}
   }
   .nav::-webkit-scrollbar{display:none}
   .nav button{white-space:nowrap;padding:6px 11px}
+  .topbar .nav{margin:0 -12px;padding:0 12px 8px}
 
   /* ---- le schede ---- */
   .card > header{flex-wrap:wrap;row-gap:6px;padding:12px 13px 9px}
@@ -1535,7 +1536,7 @@ body:has(.gate){padding-bottom:0}
 #card-vendite .dsotto.neg{color:var(--bad)}
 
 /* ============================================================
-   IL PANINO E IL CASSETTO — la barra veste navy
+   LA BARRA VESTE NAVY, col menu in fila
    ============================================================ */
 .topbar{background:var(--navy);border-bottom:1px solid var(--navy-scuro)}
 .topbar .brand{color:#F1F5F9}
@@ -1549,31 +1550,65 @@ body:has(.gate){padding-bottom:0}
    sfondo non può venire dal tema, o col chiaro diventa latte sull'ambra. */
 .topbar .versione{color:var(--ambra);background:rgba(255,255,255,.12)}
 
-.panino{display:flex;flex-direction:column;justify-content:center;gap:4px;width:34px;height:34px;padding:8px;border-radius:8px;flex:0 0 auto}
-.panino:hover{background:rgba(255,255,255,.10)}
-.panino span{display:block;height:2px;border-radius:2px;background:#F1F5F9;transition:background .12s}
-.panino[aria-expanded="true"] span{background:var(--ambra)}
+/* Le voci in fila nella barra: si costruiscono dai moduli accesi.
+   Sul telefono la fila scorre di lato, senza andare a capo. */
+.topbar .nav{
+  display:flex;gap:2px;margin-left:12px;min-width:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.topbar .nav::-webkit-scrollbar{display:none}
+.topbar .nav button{
+  padding:7px 12px;border-radius:8px;font-size:13.5px;font-weight:500;
+  color:#DCE6F2;white-space:nowrap;flex:none;background:none;box-shadow:none;
+}
+.topbar .nav button:hover{background:rgba(255,255,255,.08);color:#fff}
+.topbar .nav button[aria-current="true"]{background:rgba(232,168,56,.16);color:var(--ambra);font-weight:600}
 
-.drawer-sfondo{
-  position:fixed;inset:0;z-index:70;background:rgba(13,34,64,.45);
-  opacity:0;pointer-events:none;transition:opacity .25s ease;
+/* ============================================================
+   LA RUBRICA — elenco a sinistra, scheda coi task a destra
+   ============================================================ */
+.rubrica-elenco{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;max-height:70vh;overflow-y:auto}
+.rubrica-elenco button{
+  width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+  text-align:left;padding:9px 12px;border-radius:9px;
 }
-.drawer-sfondo[data-aperto="true"]{opacity:1;pointer-events:auto}
-.drawer{
-  position:fixed;top:0;left:0;bottom:0;z-index:71;width:250px;
-  background:var(--navy);display:flex;flex-direction:column;gap:2px;
-  padding:64px 12px 16px;box-shadow:12px 0 40px rgba(0,0,0,.25);
-  transform:translateX(-102%);visibility:hidden;
-  transition:transform .25s cubic-bezier(.2,.7,.3,1), visibility 0s linear .25s;
+.rubrica-elenco button:hover{background:var(--surface-2)}
+.rubrica-elenco button[aria-current="true"]{background:var(--accent-soft)}
+.rubrica-elenco .chi{font-size:14px;font-weight:600;color:var(--text)}
+.rubrica-elenco button[aria-current="true"] .chi{color:var(--accent)}
+.rubrica-elenco .dove{font-size:12px;color:var(--text-faint)}
+.rubrica-elenco .niente{padding:10px 12px;font-size:13px;color:var(--text-faint)}
+
+.rubrica-campi{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px}
+.rubrica-campi label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--text-dim)}
+.rubrica-campi label.larga{grid-column:1 / -1}
+.rubrica-campi input,.rubrica-campi textarea{
+  width:100%;padding:9px 12px;border-radius:8px;font-size:13.5px;font-family:inherit;
+  background:var(--surface-2);border:1px solid var(--border);outline:none;color:var(--text);resize:vertical;
 }
-.drawer[data-aperto="true"]{
-  transform:translateX(0);visibility:visible;
-  transition:transform .25s cubic-bezier(.2,.7,.3,1);
+.rubrica-campi input:focus,.rubrica-campi textarea:focus{border-color:var(--accent)}
+.rubrica-azioni{display:flex;align-items:center;gap:12px;margin-top:14px}
+.rubrica-azioni .male{font-size:12.5px;color:var(--bad)}
+.rubrica-vuoto{font-size:13.5px;color:var(--text-faint)}
+
+.rubrica-task{margin-top:26px;border-top:1px solid var(--border);padding-top:16px}
+.rubrica-task h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin:0 0 10px}
+.rubrica-task ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.rubrica-task li button{
+  width:100%;display:flex;align-items:center;gap:10px;text-align:left;
+  padding:8px 11px;border-radius:9px;border:1px solid var(--border);background:var(--surface);
 }
-.drawer button{text-align:left;padding:10px 12px;border-radius:8px;font-size:14px;color:#DCE6F2}
-.drawer button:hover{background:rgba(255,255,255,.08)}
-.drawer button[aria-current="true"]{background:rgba(232,168,56,.16);color:var(--ambra);font-weight:600}
-.riga-divisoria{height:1px;background:rgba(255,255,255,.14);margin:10px 4px}
+.rubrica-task li button:hover{border-color:var(--accent);background:var(--accent-soft)}
+.rubrica-task .pallino{width:7px;height:7px;border-radius:50%;background:var(--warn);flex:none}
+.rubrica-task li button[data-chiuso="true"] .pallino{background:var(--ok)}
+.rubrica-task .tit{font-size:13.5px;font-weight:500;flex:1;min-width:0}
+.rubrica-task li button[data-chiuso="true"] .tit{color:var(--text-faint);text-decoration:line-through}
+.rubrica-task .stato{font-size:11.5px;color:var(--text-faint)}
+
+@media (max-width:840px){
+  .rubrica-campi{grid-template-columns:1fr}
+  .rubrica-elenco{max-height:34vh}
+}
 
 /* le azioni sulle colonne dei cicli: compaiono passandoci sopra */
 .col > h3 .azioni-colonna{display:none;margin-left:6px;gap:2px}
@@ -1608,12 +1643,6 @@ body:has(.gate){padding-bottom:0}
 .modulo-config .esito.ok{color:var(--ok)}
 .modulo-config .esito.male{color:var(--bad)}
 
-/* ---- l'intestazione del cassetto ---- */
-.drawer-brand{
-  display:flex;align-items:center;gap:9px;
-  padding:4px 12px 10px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:#F1F5F9;
-}
-.drawer-brand .dot{width:9px;height:9px;border-radius:99px;background:var(--ambra);display:inline-block}
 
 /* ============================================================
    GLI SCHEMI COLORE — navy è la base; gli altri ridefiniscono

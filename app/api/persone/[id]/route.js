@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { segnaContatto } from "@/lib/store";
+import { aggiornaPersona, eliminaPersona, segnaContatto } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 /**
- * "Sentito oggi".
+ * Una persona della Rubrica.
  *
- * Un gesto solo, e per ora l'unico che serve: la data dell'ultimo contatto è
- * il campo che rende utile l'anagrafica, ed è anche quello che nessuno aggiorna
- * mai se per farlo bisogna aprire Airtable.
+ * PATCH fa due mestieri: il gesto rapido "sentito oggi" (l'unico che esisteva
+ * prima), e la modifica dei campi dell'anagrafica. DELETE la elimina: i suoi
+ * task restano, Airtable scioglie il collegamento da solo.
  */
 export async function PATCH(richiesta, { params }) {
   const { id } = await params;
@@ -17,5 +17,20 @@ export async function PATCH(richiesta, { params }) {
     await segnaContatto(id);
     return NextResponse.json({ ok: true });
   }
-  return NextResponse.json({ errore: "Niente da fare" }, { status: 400 });
+  try {
+    await aggiornaPersona(id, patch);
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    return NextResponse.json({ errore: String(e.message || e).slice(0, 200) }, { status: 500 });
+  }
+}
+
+export async function DELETE(richiesta, { params }) {
+  const { id } = await params;
+  try {
+    await eliminaPersona(id);
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    return NextResponse.json({ errore: String(e.message || e).slice(0, 200) }, { status: 500 });
+  }
 }

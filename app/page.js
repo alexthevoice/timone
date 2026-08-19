@@ -10,6 +10,7 @@ import Home from "@/components/schermate/Home";
 import Quadranti from "@/components/schermate/Quadranti";
 import SchermataAllenamento from "@/components/schermate/Allenamento";
 import Crm from "@/components/schermate/Crm";
+import Rubrica from "@/components/schermate/Rubrica";
 import Review from "@/components/schermate/Review";
 import { MODULI, normalizzaInterfaccia } from "@/lib/moduli";
 import { NOME } from "@/lib/app";
@@ -97,6 +98,12 @@ export default function Pagina() {
         ricarica={ricarica}
         aperto={taskAperto}
         onAperto={setTaskAperto}
+      />
+      <Rubrica
+        attiva={schermata === "rubrica"}
+        dati={dati}
+        ricarica={ricarica}
+        onApriTask={apriTask}
       />
       <Review attiva={schermata === "review"} />
       <Config attiva={schermata === "config"} dati={dati} interfaccia={interfaccia} ricarica={ricarica} />
